@@ -29,6 +29,10 @@ namespace ArtLocal.Models
         public string? Country { get; set; }
 
         [Required]
-        public string? PhoneNumber { get; set; } 
+        public string? PhoneNumber { get; set; }
+
+        [Required]
+        public string? Description { get; set; }
+
     }
 }
