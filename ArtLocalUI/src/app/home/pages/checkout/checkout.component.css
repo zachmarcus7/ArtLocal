@@ -1,0 +1,36 @@
+
+form .form-group {
+    margin-bottom: 1em;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+form input[type="text"], form input[type="password"], form input[type="number"] {
+    width: 100%;
+
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+}
+
+.form-group-inline {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.form-group-inline div {
+    width: 30%;
+}
+
+.mr-3 {
+    margin-right: 10px;
+}
+
+.mb-2 {
+    margin-bottom: 10px;
+}

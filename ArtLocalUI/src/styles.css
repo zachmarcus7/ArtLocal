@@ -1,31 +1,56 @@
 html {
     font-size: 14px;
-  }
-  
-  @media (min-width: 768px) {
-    html {
-      font-size: 16px;
-    }
-  }
-  
+}
+
+@media (min-width: 768px) {
   html {
-    position: relative;
-    min-height: 100%;
+    font-size: 16px;
   }
-  
-  body {
-      margin-bottom: 60px;
-      font-family: 'Raleway', sans-serif;
-  }
-  
-  .hoverable {
-      cursor: pointer;
-  }
-  
-  .details-container img {
-      object-fit: contain;
-  }
-  
-  .price-container {
-      font-weight: bold;
-  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: 'Raleway', sans-serif !important;
+    height: 100% !important;
+}
+
+.hoverable {
+    cursor: pointer;
+}
+
+.details-container img {
+    object-fit: contain;
+}
+
+.price-container {
+    font-weight: bold;
+}
+
+.general-button-green {
+  background-color: rgb(96, 168, 115);
+  padding: 0.5em 1em;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1.2em;
+  width: 15em;
+}
+
+.general-button-black {
+  background-color: rgb(33, 37, 41);
+  padding: 0.5em 1em;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1.2em;
+  width: 15em;
+}

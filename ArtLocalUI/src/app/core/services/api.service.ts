@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Artwork } from '../models/artwork.model';
+import { Artwork, Artist } from '../models';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/internal/Observable';
 export class ApiService {
 
     artworkUrl: string = 'https://localhost:7195/api/Artworks';
+    artistUrl: string = 'https://localhost:7195/api/Artists';
 
     constructor(private http: HttpClient) {}
 
@@ -20,6 +21,11 @@ export class ApiService {
     // Get a specific Artwork
     getArtwork(artworkId: string): Observable<Artwork> {
         return this.http.get<Artwork>(this.artworkUrl + "/" + artworkId)
+    }
+
+    // Get a specific Artist
+    getArtist(artistId: string): Observable<Artist> {
+        return this.http.get<Artist>(this.artistUrl + "/" + artistId)
     }
 
 }

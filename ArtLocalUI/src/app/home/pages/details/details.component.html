@@ -1,15 +1,36 @@
 
 <div class="container h-100">
-  <div class="row">
+  <div class="row pb-5">
     <div class="col-lg-5 col-md-12 col-sm-12 col-12 artwork-container">
       <img src={{artwork.imageLocation}}>
     </div>
     <div class="col-lg-4 col-md-12 col-sm-12 col-12">
       <h2>{{artwork.title}}</h2>
+      <h4>{{artist.firstName}} {{artist.lastName}}</h4>
       <p>{{artwork.description}}</p>
     </div>
-    <div class="col-lg-3 col-md-12 col-sm-12 col-12">
-      
+    <div class="col-lg-3 col-md-12 col-sm-12 col-12 text-center">
+      <a [routerLink]="['/checkout']" [queryParams]="{artworkId: artwork.artworkId}">
+        <button class="general-button-green m-2">Buy This Item</button>
+      </a>
+      <a [routerLink]="['/']">
+        <button class="general-button-black m-2">Back To Gallery</button>
+      </a>
     </div>
   </div>
+  <hr>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12 artwork-container text-center pb-5">
+      <h5>About The Artist</h5>
+      <p>
+      {{artist.description}}
+      </p>
+    </div>
+    <div class="col-lg-2 col-md-12 col-sm-12 col-12 artwork-container">
+
+    </div>
+    <div class="col-lg-0 col-md-12 col-sm-12 col-12 artwork-container">
+    </div>
+  </div>
+  <hr>
 </div>

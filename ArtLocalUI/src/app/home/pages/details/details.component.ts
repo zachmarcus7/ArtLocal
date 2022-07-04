@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Artwork, ApiService } from 'src/app/core';
+import { Artwork, ApiService, Artist } from 'src/app/core';
+import { concatMap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-details',
@@ -11,12 +12,14 @@ export class DetailsComponent  {
 
   artworkId: string;
   artwork: Artwork;
+  artist: Artist;
 
   // here we're injecting the ActivatedRoute and ApiService services into the constructor
   constructor(private route: ActivatedRoute, private apiService: ApiService) { 
     // create empty variables while we wait
     // to get the values from the parameters
     this.artworkId = "";
+
     this.artwork = {
       artworkId: "",
       artistId: "",
@@ -30,21 +33,40 @@ export class DetailsComponent  {
       artStyleId: ""
     }
 
+    this.artist = {
+      artistId: "",
+      firstName:"",
+      lastName: "",
+      address: "",
+      city: "",
+      state: "",
+      postalCode: 0,
+      country: "",
+      phoneNumber: "",
+      description: "",
+    }
+
     // here, we're getting the artwork's id from the query parameters
     // then we're making a call to the API to get the full information
-    // for the artwork
+    // for the artwork as well as the artist
     this.route.queryParams.subscribe(params => {
         this.artworkId = params['artworkId'];
-        this.apiService.getArtwork(this.artworkId)
-        .subscribe(
-          response => (
-            this.artwork = response
-          )
-        )
+        this.getArtworkAndArtist();
     });
   }
 
-
+  getArtworkAndArtist() {
+    this.apiService.getArtwork(this.artworkId)
+    .pipe(
+      switchMap(result => {
+        this.artwork = result;
+        return this.apiService.getArtist(this.artwork.artistId)
+      })
+    )
+    .subscribe(results => {
+      this.artist = results;
+    })
+  }
 
 }
 
