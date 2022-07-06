@@ -14,33 +14,33 @@ namespace ArtLocal.Controllers
     [ApiController]
     public class ArtistsController : ControllerBase
     {
-        private readonly ArtLocalDataContext _context;
+        private readonly ArtLocalDataContext _dbContext;
 
         public ArtistsController(ArtLocalDataContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
 
         // GET: api/Artists
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
         {
-          if (_context.Artists == null)
+          if (_dbContext.Artists == null)
           {
               return NotFound();
           }
-            return await _context.Artists.ToListAsync();
+            return await _dbContext.Artists.ToListAsync();
         }
 
         // GET: api/Artists/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Artist>> GetArtist(Guid id)
         {
-          if (_context.Artists == null)
+          if (_dbContext.Artists == null)
           {
               return NotFound();
           }
-            var artist = await _context.Artists.FindAsync(id);
+            var artist = await _dbContext.Artists.FindAsync(id);
 
             if (artist == null)
             {
@@ -50,8 +50,24 @@ namespace ArtLocal.Controllers
             return artist;
         }
 
+        // POST: api/Artists
+        [HttpPost]
+        public async Task<ActionResult<Artist>> PostArtist(Artist artist)
+        {
+            // generate a new GUID for the artist
+            artist.ArtistId = Guid.NewGuid();
+
+            if (_dbContext.Artists == null)
+            {
+                return Problem("Entity set 'ArtLocalDataContext.Artists'  is null.");
+            }
+            _dbContext.Artists.Add(artist);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction("GetArtist", new { id = artist.ArtistId }, artist);
+        }
+
         // PUT: api/Artists/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArtist(Guid id, Artist artist)
         {
@@ -60,11 +76,11 @@ namespace ArtLocal.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(artist).State = EntityState.Modified;
+            _dbContext.Entry(artist).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,44 +97,29 @@ namespace ArtLocal.Controllers
             return NoContent();
         }
 
-        // POST: api/Artists
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Artist>> PostArtist(Artist artist)
-        {
-          if (_context.Artists == null)
-          {
-              return Problem("Entity set 'ArtLocalDataContext.Artists'  is null.");
-          }
-            _context.Artists.Add(artist);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetArtist", new { id = artist.ArtistId }, artist);
-        }
-
         // DELETE: api/Artists/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtist(Guid id)
         {
-            if (_context.Artists == null)
+            if (_dbContext.Artists == null)
             {
                 return NotFound();
             }
-            var artist = await _context.Artists.FindAsync(id);
+            var artist = await _dbContext.Artists.FindAsync(id);
             if (artist == null)
             {
                 return NotFound();
             }
 
-            _context.Artists.Remove(artist);
-            await _context.SaveChangesAsync();
+            _dbContext.Artists.Remove(artist);
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool ArtistExists(Guid id)
         {
-            return (_context.Artists?.Any(e => e.ArtistId == id)).GetValueOrDefault();
+            return (_dbContext.Artists?.Any(e => e.ArtistId == id)).GetValueOrDefault();
         }
     }
 }

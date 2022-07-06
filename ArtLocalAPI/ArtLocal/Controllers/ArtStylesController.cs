@@ -14,33 +14,33 @@ namespace ArtLocal.Controllers
     [ApiController]
     public class ArtStylesController : ControllerBase
     {
-        private readonly ArtLocalDataContext _context;
+        private readonly ArtLocalDataContext _dbContext;
 
         public ArtStylesController(ArtLocalDataContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
 
         // GET: api/ArtStyles
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ArtStyle>>> GetArtStyle()
         {
-          if (_context.ArtStyle == null)
+          if (_dbContext.ArtStyle == null)
           {
               return NotFound();
           }
-            return await _context.ArtStyle.ToListAsync();
+            return await _dbContext.ArtStyle.ToListAsync();
         }
 
         // GET: api/ArtStyles/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ArtStyle>> GetArtStyle(Guid id)
         {
-          if (_context.ArtStyle == null)
+          if (_dbContext.ArtStyle == null)
           {
               return NotFound();
           }
-            var artStyle = await _context.ArtStyle.FindAsync(id);
+            var artStyle = await _dbContext.ArtStyle.FindAsync(id);
 
             if (artStyle == null)
             {
@@ -50,8 +50,24 @@ namespace ArtLocal.Controllers
             return artStyle;
         }
 
+        // POST: api/ArtStyles
+        [HttpPost]
+        public async Task<ActionResult<ArtStyle>> PostArtStyle(ArtStyle artStyle)
+        {
+            // generate a new GUID for the art style
+            artStyle.ArtStyleId = Guid.NewGuid();
+
+            if (_dbContext.ArtStyle == null)
+            {
+                return Problem("Entity set 'ArtLocalDataContext.ArtStyle'  is null.");
+            }
+            _dbContext.ArtStyle.Add(artStyle);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction("GetArtStyle", new { id = artStyle.ArtStyleId }, artStyle);
+        }
+
         // PUT: api/ArtStyles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutArtStyle(Guid id, ArtStyle artStyle)
         {
@@ -60,11 +76,11 @@ namespace ArtLocal.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(artStyle).State = EntityState.Modified;
+            _dbContext.Entry(artStyle).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,44 +97,29 @@ namespace ArtLocal.Controllers
             return NoContent();
         }
 
-        // POST: api/ArtStyles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<ArtStyle>> PostArtStyle(ArtStyle artStyle)
-        {
-          if (_context.ArtStyle == null)
-          {
-              return Problem("Entity set 'ArtLocalDataContext.ArtStyle'  is null.");
-          }
-            _context.ArtStyle.Add(artStyle);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetArtStyle", new { id = artStyle.ArtStyleId }, artStyle);
-        }
-
         // DELETE: api/ArtStyles/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArtStyle(Guid id)
         {
-            if (_context.ArtStyle == null)
+            if (_dbContext.ArtStyle == null)
             {
                 return NotFound();
             }
-            var artStyle = await _context.ArtStyle.FindAsync(id);
+            var artStyle = await _dbContext.ArtStyle.FindAsync(id);
             if (artStyle == null)
             {
                 return NotFound();
             }
 
-            _context.ArtStyle.Remove(artStyle);
-            await _context.SaveChangesAsync();
+            _dbContext.ArtStyle.Remove(artStyle);
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool ArtStyleExists(Guid id)
         {
-            return (_context.ArtStyle?.Any(e => e.ArtStyleId == id)).GetValueOrDefault();
+            return (_dbContext.ArtStyle?.Any(e => e.ArtStyleId == id)).GetValueOrDefault();
         }
     }
 }

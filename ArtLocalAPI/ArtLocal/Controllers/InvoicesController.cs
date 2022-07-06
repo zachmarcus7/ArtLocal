@@ -14,33 +14,35 @@ namespace ArtLocal.Controllers
     [ApiController]
     public class InvoicesController : ControllerBase
     {
-        private readonly ArtLocalDataContext _context;
+        private readonly ArtLocalDataContext _dbContext;
 
         public InvoicesController(ArtLocalDataContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
 
         // GET: api/Invoices
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoice()
         {
-          if (_context.Invoice == null)
-          {
-              return NotFound();
-          }
-            return await _context.Invoice.ToListAsync();
+            if (_dbContext.Invoice == null)
+            {
+                return NotFound();
+            }
+
+            return await _dbContext.Invoice.ToListAsync();
         }
 
         // GET: api/Invoices/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Invoice>> GetInvoice(int id)
         {
-          if (_context.Invoice == null)
-          {
-              return NotFound();
-          }
-            var invoice = await _context.Invoice.FindAsync(id);
+            if (_dbContext.Invoice == null)
+            {
+                return NotFound();
+            }
+
+            var invoice = await _dbContext.Invoice.FindAsync(id);
 
             if (invoice == null)
             {
@@ -50,21 +52,39 @@ namespace ArtLocal.Controllers
             return invoice;
         }
 
+        // POST: api/Invoices
+        [HttpPost]
+        public async Task<ActionResult<Invoice>> PostInvoice(Invoice invoice)
+        {
+
+            // generate a new GUID for the invoice
+            invoice.InvoiceId = Guid.NewGuid();
+
+            if (_dbContext.Invoice == null)
+            {
+                return Problem("Entity set 'ArtLocalDataContext.Invoice'  is null.");
+            }
+
+            _dbContext.Invoice.Add(invoice);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction("GetInvoice", new { id = invoice.InvoiceId }, invoice);
+        }
+
         // PUT: api/Invoices/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInvoice(int id, Invoice invoice)
+        public async Task<IActionResult> PutInvoice(Guid id, Invoice invoice)
         {
             if (id != invoice.InvoiceId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(invoice).State = EntityState.Modified;
+            _dbContext.Entry(invoice).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,44 +101,29 @@ namespace ArtLocal.Controllers
             return NoContent();
         }
 
-        // POST: api/Invoices
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Invoice>> PostInvoice(Invoice invoice)
-        {
-          if (_context.Invoice == null)
-          {
-              return Problem("Entity set 'ArtLocalDataContext.Invoice'  is null.");
-          }
-            _context.Invoice.Add(invoice);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetInvoice", new { id = invoice.InvoiceId }, invoice);
-        }
-
         // DELETE: api/Invoices/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteInvoice(int id)
+        public async Task<IActionResult> DeleteInvoice(Guid id)
         {
-            if (_context.Invoice == null)
+            if (_dbContext.Invoice == null)
             {
                 return NotFound();
             }
-            var invoice = await _context.Invoice.FindAsync(id);
+            var invoice = await _dbContext.Invoice.FindAsync(id);
             if (invoice == null)
             {
                 return NotFound();
             }
 
-            _context.Invoice.Remove(invoice);
-            await _context.SaveChangesAsync();
+            _dbContext.Invoice.Remove(invoice);
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool InvoiceExists(int id)
+        private bool InvoiceExists(Guid id)
         {
-            return (_context.Invoice?.Any(e => e.InvoiceId == id)).GetValueOrDefault();
+            return (_dbContext.Invoice?.Any(e => e.InvoiceId == id)).GetValueOrDefault();
         }
     }
 }

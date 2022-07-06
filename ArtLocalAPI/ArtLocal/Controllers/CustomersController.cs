@@ -14,33 +14,33 @@ namespace ArtLocal.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly ArtLocalDataContext _context;
+        private readonly ArtLocalDataContext _dbContext;
 
         public CustomersController(ArtLocalDataContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
 
-        // GET: api/Customers
+        // Get all Customers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
-            if (_context.Customers == null)
+            if (_dbContext.Customers == null)
             {
                 return NotFound();
             }
-            return await _context.Customers.ToListAsync();
+            return await _dbContext.Customers.ToListAsync();
         }
 
-        // GET: api/Customers/5
-        [HttpGet("{id}")]
+        // Get a specific Customer
+        [HttpGet("{id}")]                                  
         public async Task<ActionResult<Customer>> GetCustomer(Guid id)
         {
-            if (_context.Customers == null)
+            if (_dbContext.Customers == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _dbContext.Customers.FindAsync(id);
 
             if (customer == null)
             {
@@ -50,75 +50,69 @@ namespace ArtLocal.Controllers
             return customer;
         }
 
-        // PUT: api/Customers/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomer(Guid id, Customer customer)
-        {
-            if (id != customer.CustomerId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(customer).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Customers
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // Create a new Customer
         [HttpPost]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
-            if (_context.Customers == null)
+            // generate a new GUID for the customer
+            customer.CustomerId = Guid.NewGuid();
+
+            if (_dbContext.Customers == null)
             {
                 return Problem("Entity set 'ArtLocalDataContext.Customers'  is null.");
             }
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
+
+            _dbContext.Customers.Add(customer);
+            await _dbContext.SaveChangesAsync();
 
             return CreatedAtAction("GetCustomer", new { id = customer.CustomerId }, customer);
+        }
+
+        // localhost:7195/api/Customers/Authentication                                        
+        [HttpPost("Authentication")]
+        public async Task<IActionResult> Authenticate([FromBody] Customer customer)
+        {
+            // check if user exists in the database
+            Customer testCustomer = await _dbContext.Customers.FirstOrDefaultAsync(user => user.Username == customer.Username);
+
+            if (testCustomer == null)
+            {
+                return NoContent();
+            }
+
+            // test if the credentials match
+            if ((customer.Username == testCustomer.Username) &&
+                (customer.Password == testCustomer.Password))
+            {
+                return Ok(testCustomer);
+            }
+            return NoContent();
+           
         }
 
         // DELETE: api/Customers/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCustomer(Guid id)
         {
-            if (_context.Customers == null)
+            if (_dbContext.Customers == null)
             {
                 return NotFound();
             }
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _dbContext.Customers.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
+            _dbContext.Customers.Remove(customer);
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool CustomerExists(Guid id)
         {
-            return (_context.Customers?.Any(e => e.CustomerId == id)).GetValueOrDefault();
+            return (_dbContext.Customers?.Any(e => e.CustomerId == id)).GetValueOrDefault();
         }
     }
 }

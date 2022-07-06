@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace ArtLocal.Models
 {
@@ -12,6 +13,12 @@ namespace ArtLocal.Models
 
         [Required]
         public string? LastName { get; set; }
+
+        [Required]
+        public string? Username { get; set; }
+
+        [Required]
+        public string? Password { get; set; }
 
         [Required]
         public string? Address { get; set; }

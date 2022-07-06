@@ -18,5 +18,6 @@ namespace ArtLocal.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
         public DbSet<Invoice> Invoice { get; set; }
+        public DbSet<ArtLocal.Models.Admin>? Admin { get; set; }
     }
 }

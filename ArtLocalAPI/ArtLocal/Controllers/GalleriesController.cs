@@ -14,33 +14,33 @@ namespace ArtLocal.Controllers
     [ApiController]
     public class GalleriesController : ControllerBase
     {
-        private readonly ArtLocalDataContext _context;
+        private readonly ArtLocalDataContext _dbContext;
 
         public GalleriesController(ArtLocalDataContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
 
         // GET: api/Galleries
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Gallery>>> GetGalleries()
         {
-          if (_context.Galleries == null)
+          if (_dbContext.Galleries == null)
           {
               return NotFound();
           }
-            return await _context.Galleries.ToListAsync();
+            return await _dbContext.Galleries.ToListAsync();
         }
 
         // GET: api/Galleries/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Gallery>> GetGallery(Guid id)
         {
-          if (_context.Galleries == null)
+          if (_dbContext.Galleries == null)
           {
               return NotFound();
           }
-            var gallery = await _context.Galleries.FindAsync(id);
+            var gallery = await _dbContext.Galleries.FindAsync(id);
 
             if (gallery == null)
             {
@@ -50,8 +50,25 @@ namespace ArtLocal.Controllers
             return gallery;
         }
 
+        // POST: api/Galleries
+        [HttpPost]
+        public async Task<ActionResult<Gallery>> PostGallery(Gallery gallery)
+        {
+            // generate a new GUID for the gallery
+            gallery.GalleryId = Guid.NewGuid();
+
+            if (_dbContext.Galleries == null)
+            {
+                return Problem("Entity set 'ArtLocalDataContext.Galleries'  is null.");
+            }
+
+            _dbContext.Galleries.Add(gallery);
+            await _dbContext.SaveChangesAsync();
+
+            return CreatedAtAction("GetGallery", new { id = gallery.GalleryId }, gallery);
+        }
+
         // PUT: api/Galleries/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutGallery(Guid id, Gallery gallery)
         {
@@ -60,11 +77,11 @@ namespace ArtLocal.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(gallery).State = EntityState.Modified;
+            _dbContext.Entry(gallery).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -81,44 +98,29 @@ namespace ArtLocal.Controllers
             return NoContent();
         }
 
-        // POST: api/Galleries
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Gallery>> PostGallery(Gallery gallery)
-        {
-          if (_context.Galleries == null)
-          {
-              return Problem("Entity set 'ArtLocalDataContext.Galleries'  is null.");
-          }
-            _context.Galleries.Add(gallery);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetGallery", new { id = gallery.GalleryId }, gallery);
-        }
-
         // DELETE: api/Galleries/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGallery(Guid id)
         {
-            if (_context.Galleries == null)
+            if (_dbContext.Galleries == null)
             {
                 return NotFound();
             }
-            var gallery = await _context.Galleries.FindAsync(id);
+            var gallery = await _dbContext.Galleries.FindAsync(id);
             if (gallery == null)
             {
                 return NotFound();
             }
 
-            _context.Galleries.Remove(gallery);
-            await _context.SaveChangesAsync();
+            _dbContext.Galleries.Remove(gallery);
+            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool GalleryExists(Guid id)
         {
-            return (_context.Galleries?.Any(e => e.GalleryId == id)).GetValueOrDefault();
+            return (_dbContext.Galleries?.Any(e => e.GalleryId == id)).GetValueOrDefault();
         }
     }
 }

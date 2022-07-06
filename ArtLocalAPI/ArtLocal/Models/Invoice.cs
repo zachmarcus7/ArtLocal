@@ -6,7 +6,7 @@ namespace ArtLocal.Models
     public class Invoice
     {
         [Key]
-        public int InvoiceId { get; set; }
+        public Guid InvoiceId { get; set; }
 
         [Required]
         [ForeignKey("ArtworkId")]
