@@ -41,6 +41,7 @@ body {
   cursor: pointer;
   font-size: 1.2em;
   width: 15em;
+  margin-bottom: 10px;
 }
 
 .general-button-black {
@@ -53,4 +54,16 @@ body {
   cursor: pointer;
   font-size: 1.2em;
   width: 15em;
+  margin-bottom: 10px;
 }
+
+.text-link {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  color: white;
+}
+

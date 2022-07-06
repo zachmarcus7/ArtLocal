@@ -1,6 +1,6 @@
 <div class="container pb-5">
     <div class="pb-3">
-        <h2>Checkout</h2>
+        <h2>Registration</h2>
         <h5>Please enter your details below</h5>
     </div>
     <div class="cards-container row">
@@ -43,11 +43,11 @@
             <input type="text" name="phoneNumber" [(ngModel)]="customer.phoneNumber">
         </div>
         <div class="pl-0">
-            <a [routerLink]="['/checkout']" class="mr-3 mb-2 pb-3">
-              <button class="general-button-green" (click)="onSubmit()">Place Order</button>
+            <a [routerLink]="['/']" class="mr-3 mb-2 pb-3">
+              <button class="general-button-green" (click)="onSubmit()">Create Account</button>
             </a>
             <a [routerLink]="['/']" class="mb-2">
-              <button class="general-button-black">Cancel Order</button>
+              <button class="general-button-black">Cancel</button>
             </a>
         </div>
         </form>

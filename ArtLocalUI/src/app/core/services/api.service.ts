@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Artwork, Artist } from '../models';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Artwork, Artist, Customer, Invoice } from '../models';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
@@ -8,8 +8,12 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class ApiService {
 
-    artworkUrl: string = 'https://localhost:7195/api/Artworks';
-    artistUrl: string = 'https://localhost:7195/api/Artists';
+    baseUrl: string = 'https://localhost:7195/api/';
+    artworkUrl: string = this.baseUrl + 'Artworks';
+    artistUrl: string = this.baseUrl + 'Artists';
+    customerUrl: string = this.baseUrl + 'Customers';
+    invoiceUrl: string = this.baseUrl + 'Invoices';
+
 
     constructor(private http: HttpClient) {}
 
@@ -23,9 +27,28 @@ export class ApiService {
         return this.http.get<Artwork>(this.artworkUrl + "/" + artworkId)
     }
 
+    // Update a specific Artwork
+
     // Get a specific Artist
     getArtist(artistId: string): Observable<Artist> {
         return this.http.get<Artist>(this.artistUrl + "/" + artistId)
     }
+
+    // Create a new Customer
+    createCustomer(customer: Customer): Observable<Customer> {
+        return this.http.post<Customer>(this.customerUrl, customer);
+    }
+
+    // Create a new Invoice
+    createInvoice(invoice: Invoice): Observable<Invoice> {
+        return this.http.post<Invoice>(this.invoiceUrl, invoice);
+    }
+
+    // Authenticate a customer's login                                      
+    authenticateCustomer(customer: Customer): Observable<HttpResponse<Customer>> {
+        return this.http.post<Customer>(this.customerUrl + "/Authentication", customer, {observe: 'response'});
+    }
+
+    // Authenticate an admin's login
 
 }

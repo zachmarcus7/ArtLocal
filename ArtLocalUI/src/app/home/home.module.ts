@@ -3,9 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { HomeComponent, DetailsComponent, CheckoutComponent } from './pages';
- 
- 
+import { HomeComponent, 
+         DetailsComponent, 
+         CheckoutComponent,
+         CustomerRegisterComponent,
+         CustomerLoginComponent } from './pages';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +21,8 @@ import { HomeComponent, DetailsComponent, CheckoutComponent } from './pages';
   declarations: [ 
     HomeComponent, 
     DetailsComponent, 
-
+    CustomerRegisterComponent, 
+    CustomerLoginComponent
   ],
   exports: [
     CommonModule,
