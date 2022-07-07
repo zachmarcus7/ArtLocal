@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer, ApiService} from 'src/app/core';
+import { Customer, ApiService, AuthenticationService} from 'src/app/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -12,8 +13,11 @@ export class CustomerRegisterComponent {
   // create customer object for storing data from form in
   customer: Customer;
 
-  // inject the api service into the constructor
-  constructor(private apiService: ApiService) { 
+  // inject services for router, api, and authentication
+  constructor(private router: Router, 
+              private apiService: ApiService,
+              private authenticationService: AuthenticationService) { 
+
     // initialize an empty customer object
     // set the ID to an empty GUID value
     this.customer = {
@@ -32,8 +36,22 @@ export class CustomerRegisterComponent {
 
   }
 
-  onSubmit(): void {
-    console.log(this.customer);
+  createCustomer(): void {
+    // authenticate the user with the back end
+    this.apiService.createCustomer(this.customer)
+    .subscribe(
+      response => (
+        this.saveCustomer(response)
+      )
+    )
+  }
+
+  saveCustomer(response: Customer | null) {
+    // save the current user
+    if (response != null) {
+      this.authenticationService.logIn(response);
+      this.router.navigate(['/']);
+    }
   }
 
 }

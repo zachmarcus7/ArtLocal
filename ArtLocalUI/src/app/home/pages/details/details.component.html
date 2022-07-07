@@ -10,9 +10,17 @@
       <p>{{artwork.description}}</p>
     </div>
     <div class="col-lg-3 col-md-12 col-sm-12 col-12 text-center">
-      <a [routerLink]="['/checkout']" [queryParams]="{artworkId: artwork.artworkId}">
-        <button class="general-button-green m-2">Buy This Item</button>
-      </a>
+      <div *ngIf="sold; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+        <a>
+          <button class="general-button-dark-green m-2">Item Currently Unavailable</button>
+        </a>
+      </ng-template>
+      <ng-template #elseBlock>
+        <a [routerLink]="['/checkout']" [queryParams]="{artworkId: artwork.artworkId}">
+          <button class="general-button-green m-2">Buy This Item</button>
+        </a>
+      </ng-template>
       <a [routerLink]="['/']">
         <button class="general-button-black m-2">Back To Gallery</button>
       </a>

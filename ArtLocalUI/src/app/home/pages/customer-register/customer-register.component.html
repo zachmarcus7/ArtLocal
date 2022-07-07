@@ -5,16 +5,26 @@
     </div>
     <div class="cards-container row">
       <div class="cards-form col-lg-6 col-md-6 col-sm-12 col-12">
-        <form #form="ngForm" (ngSubmit)="onSubmit()">         
+        <form #form="ngForm" (ngSubmit)="createCustomer()">         
         <div class="form-group form-group-inline-half">
-            <div>
-                <label for="firstName">First Name</label>
-                <input type="text" name="firstName" [(ngModel)]="customer.firstName">
-            </div>
-            <div>
-                <label for="lastName">Last Name</label>
-                <input type="text" name="lastName" [(ngModel)]="customer.lastName">
-            </div>
+          <div>
+              <label for="firstName">First Name</label>
+              <input type="text" name="firstName" [(ngModel)]="customer.firstName">
+          </div>
+          <div>
+              <label for="lastName">Last Name</label>
+              <input type="text" name="lastName" [(ngModel)]="customer.lastName">
+          </div>
+        </div>
+        <div class="form-group form-group-inline-half">
+          <div>
+              <label for="userName">Username</label>
+              <input type="text" name="userName" [(ngModel)]="customer.userName">
+          </div>
+          <div>
+              <label for="password">Password</label>
+              <input type="text" name="password" [(ngModel)]="customer.password">
+          </div>
         </div>
         <div class="form-group">                            
             <label for="address">Address</label>                   
@@ -44,7 +54,7 @@
         </div>
         <div class="pl-0">
             <a [routerLink]="['/']" class="mr-3 mb-2 pb-3">
-              <button class="general-button-green" (click)="onSubmit()">Create Account</button>
+              <button class="general-button-green" (click)="createCustomer()">Create Account</button>
             </a>
             <a [routerLink]="['/']" class="mb-2">
               <button class="general-button-black">Cancel</button>

@@ -27,7 +27,10 @@ export class ApiService {
         return this.http.get<Artwork>(this.artworkUrl + "/" + artworkId)
     }
 
-    // Update a specific Artwork
+    // Update a specific Artwork's sold property
+    updateArtwork(artworkId: string, updatedArtwork: Artwork): Observable<Artwork> {
+        return this.http.put<Artwork>(this.artworkUrl + "/" + artworkId, updatedArtwork);
+    }
 
     // Get a specific Artist
     getArtist(artistId: string): Observable<Artist> {
@@ -48,7 +51,5 @@ export class ApiService {
     authenticateCustomer(customer: Customer): Observable<HttpResponse<Customer>> {
         return this.http.post<Customer>(this.customerUrl + "/Authentication", customer, {observe: 'response'});
     }
-
-    // Authenticate an admin's login
 
 }

@@ -55,3 +55,10 @@ form input[type="text"], form input[type="password"], form input[type="number"] 
     display: inline;
     padding-bottom: 10px;
 }
+
+.checkout-note-container {
+    border:1px solid #dcdcdc;
+    box-shadow: 1px 1px 8px 1px #dcdcdc;
+    padding: 10px;
+    margin-bottom: 20px;
+}

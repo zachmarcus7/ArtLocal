@@ -9,13 +9,16 @@ import { AuthenticationService } from 'src/app/core';
 export class HeaderComponent implements OnInit {
 
   loggedIn: boolean;
+  currentName: string;
 
   constructor(private authenticationService: AuthenticationService) {
     this.loggedIn = false;
+    this.currentName = "";
   }
 
   ngOnInit() {
     this.getLoggedInValue();
+    this.getNameValue();
   }
 
   getLoggedInValue() {
@@ -23,6 +26,15 @@ export class HeaderComponent implements OnInit {
     .subscribe(
       response => (
         this.loggedIn = response
+      )
+    )
+  }
+
+  getNameValue() {
+    this.authenticationService.getCurrentName()
+    .subscribe(
+      response => (
+        this.currentName = response
       )
     )
   }
