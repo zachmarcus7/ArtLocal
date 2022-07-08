@@ -1,6 +1,6 @@
-<div class="container pb-5 pt-3">
+<div class="container pb-5">
     <div class="pb-3">
-        <h2>Customer Log In</h2>
+        <h2>Admin Log In</h2>
         <h5>Please enter your details below</h5>
     </div>
     <div class="cards-container row">
@@ -8,15 +8,12 @@
         <form #form="ngForm" (ngSubmit)="login()">         
         <div class="form-group">                            
             <label for="username">Username</label>                   
-            <input type="text" name="username" [(ngModel)]="customer.userName">
+            <input type="text" name="username" [(ngModel)]="admin.userName">
             <label for="password">Password</label>                   
-            <input type="text" name="password" [(ngModel)]="customer.password">
-        </div>
-        <div>
-            <p>Need to create an account? <span><a [routerLink]="['/register']">Register Here.</a></span></p>
+            <input type="text" name="password" [(ngModel)]="admin.password">
         </div>
         <div class="pl-0">
-            <a [routerLink]="['/']" class="mr-3 mb-2 pb-3">
+            <a class="mr-3 mb-2 pb-3">
               <button class="general-button-green" (click)="login()">Log In</button>
             </a>
             <a [routerLink]="['/']" class="mb-2">

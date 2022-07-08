@@ -1,0 +1,50 @@
+<div class="pt-4">
+  <h1>Invoice Data</h1>
+
+  <div class="cards-container row">
+
+    <div class="cards-container row col-lg-6 col-md-12">
+      <div class="cards-form">
+        <form #form="ngForm">         
+        <div class="form-group">                            
+            <label for="artworkId">Artwork</label>                   
+            <input type="text" name="artworkId" [(ngModel)]="invoice.artworkId">
+        </div>
+        <div class="form-group">                            
+          <label for="customerId">Customer</label>                   
+          <input type="text" name="artworkId" [(ngModel)]="invoice.customerId">
+        </div>
+        <div class="form-group">                            
+          <label for="dateBought">Date Bought</label>                   
+          <input type="text" name="dateBought" [(ngModel)]="invoice.dateBought">
+        </div>
+        <div class="form-group">                            
+          <label for="sellPrice">Sell Price</label>                   
+          <input type="text" name="sellPrice" [(ngModel)]="invoice.sellPrice">
+        </div>
+      
+        <div class="pl-0">
+            <a class="mb-2">
+              <button class="general-button-black" (click)="clearForm()">Clear</button>
+            </a>
+        </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="cards-grid col-lg-6 col-md-12">
+      <div class="records-row" *ngFor="let invoice of invoices">
+        <div class="records-row-details" (click)="populateForm(invoice)" >
+          <span>{{ invoice.artworkId }}</span>
+          <div class="records-row-action">
+            <a>
+              <i class="fa-solid fa-file-pen"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div> 
+
+  </div>
+</div>
+

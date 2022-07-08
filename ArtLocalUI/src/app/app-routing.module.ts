@@ -5,6 +5,15 @@ import { HomeComponent,
          CheckoutComponent, 
          CustomerRegisterComponent,
          CustomerLoginComponent } from './home';
+import { AdminLoginComponent,
+         AdminDashboardComponent,
+         AdminArtistEditComponent,
+         AdminArtworkEditComponent,
+         AdminArtstyleEditComponent,
+         AdminCustomerEditComponent,
+         AdminGalleryEditComponent,
+         AdminInvoiceEditComponent } from './admin';
+ 
 
 const routes: Routes = [{
   path: '', component: HomeComponent
@@ -16,6 +25,18 @@ const routes: Routes = [{
   path: 'details', component: DetailsComponent
 }, {
   path: 'checkout', component: CheckoutComponent
+}, {
+  path: 'admin', component: AdminLoginComponent
+}, {
+  path: 'admin/dashboard', component: AdminDashboardComponent,
+  children: [
+    { path: 'artists', component: AdminArtistEditComponent}, 
+    { path: 'artwork', component: AdminArtworkEditComponent}, 
+    { path: 'artstyles', component: AdminArtstyleEditComponent}, 
+    { path: 'galleries', component: AdminGalleryEditComponent}, 
+    { path: 'customers', component: AdminCustomerEditComponent}, 
+    { path: 'invoices', component: AdminInvoiceEditComponent}, 
+  ]
 }];
 
 @NgModule({

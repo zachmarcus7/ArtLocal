@@ -9,6 +9,9 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { HomeModule } from './home';
 import { CheckoutComponent } from './home';
+import { AdminLoginComponent } from './admin/pages/admin-login/admin-login.component';
+import { AdminDashboardComponent } from './admin/pages/admin-dashboard/admin-dashboard.component';
+import { AdminArtistEditComponent } from './admin';
 
 @NgModule({
   declarations: [

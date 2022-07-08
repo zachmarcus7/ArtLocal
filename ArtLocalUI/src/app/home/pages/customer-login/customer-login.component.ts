@@ -37,7 +37,7 @@ export class CustomerLoginComponent  {
   }
 
   login(): void {
-    // authenticate the user with the back end
+    // authenticate the Customer with the back end
     this.apiService.authenticateCustomer(this.customer)
     .subscribe(
       response => (

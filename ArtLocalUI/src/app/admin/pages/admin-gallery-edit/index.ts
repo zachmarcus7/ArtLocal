@@ -1,0 +1,1 @@
+export * from './admin-gallery-edit.component';

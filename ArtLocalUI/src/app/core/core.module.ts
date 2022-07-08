@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ApiService, AuthenticationService } from './services';
+import { AdminAuthenticationService, ApiService, AuthenticationService } from './services';
  
  
 @NgModule({
@@ -8,7 +8,8 @@ import { ApiService, AuthenticationService } from './services';
   exports: [],
   providers: [
     ApiService,
-    AuthenticationService
+    AuthenticationService,
+    AdminAuthenticationService
   ]
 })
 export class CoreModule {

@@ -1,11 +1,11 @@
-<div class="container pb-5 pt-3">
-    <div class="pb-3">
-        <h2>Customer Registration</h2>
-        <h5>Please enter your details below</h5>
-    </div>
-    <div class="cards-container row">
-      <div class="cards-form col-lg-6 col-md-6 col-sm-12 col-12">
-        <form #form="ngForm" (ngSubmit)="createCustomer()">         
+<div class="pt-4">
+  <h1>Customer Data</h1>
+
+  <div class="cards-container row">
+
+    <div class="cards-container row col-lg-6 col-md-12">
+      <div class="cards-form">
+        <form #form="ngForm">         
         <div class="form-group form-group-inline-half">
           <div>
               <label for="firstName">First Name</label>
@@ -14,16 +14,6 @@
           <div>
               <label for="lastName">Last Name</label>
               <input type="text" name="lastName" [(ngModel)]="customer.lastName">
-          </div>
-        </div>
-        <div class="form-group form-group-inline-half">
-          <div>
-              <label for="userName">Username</label>
-              <input type="text" name="userName" [(ngModel)]="customer.userName">
-          </div>
-          <div>
-              <label for="password">Password</label>
-              <input type="text" name="password" [(ngModel)]="customer.password">
           </div>
         </div>
         <div class="form-group">                            
@@ -51,16 +41,32 @@
           <div class="form-group">                            
             <label for="phoneNumber">Phone Number</label>                   
             <input type="text" name="phoneNumber" [(ngModel)]="customer.phoneNumber">
-        </div>
+          </div>
         <div class="pl-0">
-            <a [routerLink]="['/']" class="mr-3 mb-2 pb-3">
-              <button class="general-button-green" (click)="createCustomer()">Create Account</button>
+            <a class="mr-3 mb-2 pb-3">
+              <button class="general-button-green" (click)="onSubmit()">Save</button>
             </a>
-            <a [routerLink]="['/']" class="mb-2">
-              <button class="general-button-black">Cancel</button>
+            <a class="mb-2">
+              <button class="general-button-black" (click)="clearForm()">Cancel</button>
             </a>
         </div>
         </form>
       </div>
     </div>
+
+    <div class="cards-grid col-lg-6 col-md-12">
+      <div class="records-row" *ngFor="let customer of customers">
+        <div class="records-row-details" (click)="populateForm(customer)" >
+          <span>{{ customer.firstName }} {{customer.lastName}}</span>
+          <div class="records-row-action">
+            <a>
+              <i class="fa-solid fa-file-pen"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div> 
+
   </div>
+</div>
+

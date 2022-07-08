@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from 'src/app/core';
+import { AdminAuthenticationService, AuthenticationService } from 'src/app/core';
  
 @Component({
   selector: 'app-header',
@@ -9,10 +9,14 @@ import { AuthenticationService } from 'src/app/core';
 export class HeaderComponent implements OnInit {
 
   loggedIn: boolean;
+  adminLoggedIn: boolean;
   currentName: string;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+              private adminAuthenticationService: AdminAuthenticationService) {
+                
     this.loggedIn = false;
+    this.adminLoggedIn = false;
     this.currentName = "";
   }
 
@@ -26,6 +30,15 @@ export class HeaderComponent implements OnInit {
     .subscribe(
       response => (
         this.loggedIn = response
+      )
+    )
+  }
+
+  getAdminLoggedInValue() {
+    this.adminAuthenticationService.isLoggedIn()
+    .subscribe(
+      response => (
+        this.adminLoggedIn = response
       )
     )
   }
