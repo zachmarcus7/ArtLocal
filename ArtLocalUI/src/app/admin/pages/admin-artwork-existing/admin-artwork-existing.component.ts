@@ -1,25 +1,25 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Artwork, ApiService, Artstyle, Artist, Gallery } from 'src/app/core';
 
 @Component({
-  selector: 'app-admin-artwork-edit',
-  templateUrl: './admin-artwork-edit.component.html',
-  styleUrls: ['./admin-artwork-edit.component.css']
+  selector: 'app-admin-artwork-existing',
+  templateUrl: './admin-artwork-existing.component.html',
+  styleUrls: ['./admin-artwork-existing.component.css']
 })
-export class AdminArtworkEditComponent implements OnInit {
+export class AdminArtworkExistingComponent implements OnInit {
 
   artworks: Artwork[];
   artwork: Artwork;
   artists: Artist[];
   galleries: Gallery[];
-  artstyles: Artstyle[];
+  artStyles: Artstyle[];
 
   constructor(private apiService: ApiService) { 
     // create empty objects to store data in
     this.artworks = [];
     this.artists = [];
     this.galleries = [];
-    this.artstyles = [];
+    this.artStyles = [];
     this.artwork = {
       artworkId: "00000000-0000-0000-0000-000000000000",
       artistId: "",
@@ -70,7 +70,7 @@ export class AdminArtworkEditComponent implements OnInit {
     this.apiService.getAllArtstyles()
     .subscribe(
       response =>
-        this.artstyles = response
+        this.artStyles = response
     )
   }
 
@@ -90,18 +90,43 @@ export class AdminArtworkEditComponent implements OnInit {
     }
   }
 
-  populateForm(artwork: Artwork) {
-    this.artwork = artwork;
+  getMatchingArtist(artistId: string): string {
+    for (var i = 0; i < this.artists.length; i++) {
+      if (this.artists[i].artistId === artistId) 
+        return (`${this.artists[i].firstName} ${this.artists[i].lastName}`);
+    }
+    return "Not Found";
   }
 
-  onSubmit() {
-    this.apiService.createArtwork(this.artwork)
-    .subscribe( 
-      response => {
-        // once we get a response, clear out the forms
-        this.clearForm();
-      }
-    )
+  getMatchingArtStyle(artStyleId: string) {
+    for (var i = 0; i < this.artStyles.length; i++) {
+      if (this.artStyles[i].artStyleId === artStyleId)
+        return (`${this.artStyles[i].style}`);
+    }
+    return "Not Found";
+  }
+
+  getMatchingGallery(galleryId: string) {
+    for (var i = 0; i < this.galleries.length; i++) {
+      if (this.galleries[i].galleryId === galleryId) 
+        return (`${this.galleries[i].name}`);
+    }
+    return "Not Found";
+  }
+
+  populateForm(artwork: Artwork) {
+    // first, empty out current form
+    this.clearForm();
+
+    // then, create a new artwork object to copy values into
+    var newArtwork = artwork;
+
+    // then, need to update the values that have id's
+    newArtwork.artistId = this.getMatchingArtist(artwork.artistId);
+    newArtwork.artStyleId = this.getMatchingArtStyle(artwork.artStyleId);
+    newArtwork.galleryId = this.getMatchingGallery(artwork.galleryId);
+
+    this.artwork = newArtwork;
   }
 
 }

@@ -1,8 +1,6 @@
 <div class="pt-4">
     <h1>Artist Data</h1>
-  
-    <div class="cards-container row">
-
+    <div class="cards-container row general-container">
       <div class="cards-container row col-lg-6 col-md-12">
         <div class="cards-form">
           <form #form="ngForm">         
@@ -57,7 +55,6 @@
           </form>
         </div>
       </div>
-  
       <div class="cards-grid col-lg-6 col-md-12">
         <div class="records-row" *ngFor="let artist of artists">
           <div class="records-row-details" (click)="populateForm(artist)" >
@@ -70,7 +67,6 @@
           </div>
         </div>
       </div> 
-
     </div>
   </div>
   

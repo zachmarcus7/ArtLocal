@@ -1,28 +1,25 @@
 <div class="pt-4">
   <h1>Invoice Data</h1>
-
-  <div class="cards-container row">
-
+  <div class="cards-container row general-container">
     <div class="cards-container row col-lg-6 col-md-12">
       <div class="cards-form">
         <form #form="ngForm">         
         <div class="form-group">                            
             <label for="artworkId">Artwork</label>                   
-            <input type="text" name="artworkId" [(ngModel)]="invoice.artworkId">
+            <p name="artworkId" [(ngModel)]="invoice.artworkId">{{invoice.artworkId}}</p>
         </div>
         <div class="form-group">                            
           <label for="customerId">Customer</label>                   
-          <input type="text" name="artworkId" [(ngModel)]="invoice.customerId">
+          <p name="artworkId" [(ngModel)]="invoice.customerId">{{invoice.customerId}}</p>
         </div>
         <div class="form-group">                            
           <label for="dateBought">Date Bought</label>                   
-          <input type="text" name="dateBought" [(ngModel)]="invoice.dateBought">
+          <p name="dateBought" [(ngModel)]="invoice.dateBought">{{invoice.dateBought}}</p>
         </div>
         <div class="form-group">                            
           <label for="sellPrice">Sell Price</label>                   
-          <input type="text" name="sellPrice" [(ngModel)]="invoice.sellPrice">
+          <p name="sellPrice" [(ngModel)]="invoice.sellPrice">{{invoice.sellPrice}}</p>
         </div>
-      
         <div class="pl-0">
             <a class="mb-2">
               <button class="general-button-black" (click)="clearForm()">Clear</button>
@@ -31,20 +28,13 @@
         </form>
       </div>
     </div>
-
     <div class="cards-grid col-lg-6 col-md-12">
       <div class="records-row" *ngFor="let invoice of invoices">
         <div class="records-row-details" (click)="populateForm(invoice)" >
           <span>{{ invoice.artworkId }}</span>
-          <div class="records-row-action">
-            <a>
-              <i class="fa-solid fa-file-pen"></i>
-            </a>
-          </div>
         </div>
       </div>
     </div> 
-
   </div>
 </div>
 

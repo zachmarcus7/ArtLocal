@@ -1,0 +1,69 @@
+<div class="cards-container row general-container">
+    <div class="cards-container row col-lg-6 col-md-12">
+      <div class="cards-form">
+        <form #form="ngForm">         
+        <div class="form-group form-group-inline-half">
+          <div class="form-group">
+              <label for="artistId">Artist</label>
+              <select name="artistId" class="form-control" (change)="changeArtist($event)">
+                <option>--Select--</option>
+                <option [value]="artist.artistId" *ngFor="let artist of artists">
+                  {{artist.firstName}} {{artist.lastName}}
+                </option>
+              </select>
+          </div>
+          <div>
+            <label for="title">Title</label>
+            <input type="text" name="title" [(ngModel)]="artwork.title">
+          </div>
+        </div>
+        <div class="form-group">                            
+            <label for="description">Description</label>                   
+            <input type="text" name="description" [(ngModel)]="artwork.description">
+        </div>
+        <div class="form-group form-group-inline-half">
+          <div>
+            <label for="dateCreated">Date Created</label>                   
+            <input type="date" name="dateCreated" [(ngModel)]="artwork.dateCreated">
+          </div>
+          <div>
+            <label for="price">Price</label>                   
+            <input type="number" name="price" [(ngModel)]="artwork.price">
+          </div>
+        </div>
+        <div class="form-group">                            
+          <label for="imageLocation">Image</label>                   
+          <input type="file" name="imageLocation" (change)="onFileSelected($event)"> 
+        </div>
+        <div class="form-group form-group-inline-half">
+          <div>
+              <label for="gallery">Gallery</label>
+              <select name="galleryId" class="form-control" (change)="changeGallery($event)">
+                <option>--Select--</option>
+                <option [value]="gallery.galleryId" *ngFor="let gallery of galleries">
+                  {{gallery.name}}
+                </option>
+              </select>
+          </div>
+          <div>
+              <label for="artStyle">Art Style</label>
+              <select name="artstyleId" class="form-control" (change)="changeArtstyle($event)">
+                <option>--Select--</option>
+                <option [value]="artstyle.artStyleId" *ngFor="let artstyle of artstyles">
+                  {{artstyle.style}}
+                </option>
+              </select>
+          </div>
+        </div>
+        <div class="pl-0">
+            <a class="mr-3 mb-2 pb-3">
+              <button class="general-button-green" (click)="onSubmit()">Save</button>
+            </a>
+            <a class="mb-2">
+              <button class="general-button-black" (click)="clearForm()">Cancel</button>
+            </a>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>

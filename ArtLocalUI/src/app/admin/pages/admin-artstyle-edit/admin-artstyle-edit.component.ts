@@ -16,7 +16,7 @@ export class AdminArtstyleEditComponent implements OnInit {
     // create empty objects to store data in
     this.artstyles = [];
     this.artstyle = {
-      artstyleId: "00000000-0000-0000-0000-000000000000",
+      artStyleId: "00000000-0000-0000-0000-000000000000",
       style:"",
       description: "",
     };
@@ -38,7 +38,7 @@ export class AdminArtstyleEditComponent implements OnInit {
   clearForm() {
     this.getAllRecords(); 
     this.artstyle = {
-      artstyleId: "00000000-0000-0000-0000-000000000000",
+      artStyleId: "00000000-0000-0000-0000-000000000000",
       style:"",
       description: "",
     };
@@ -46,7 +46,7 @@ export class AdminArtstyleEditComponent implements OnInit {
 
   onSubmit() {
     // check if we're receiving a new record
-    if (this.artstyle.artstyleId === "00000000-0000-0000-0000-000000000000") {
+    if (this.artstyle.artStyleId === "00000000-0000-0000-0000-000000000000") {
       this.apiService.createArtstyle(this.artstyle)
       .subscribe( 
         response => {
@@ -63,7 +63,7 @@ export class AdminArtstyleEditComponent implements OnInit {
   }
 
   updateArtstyle(artstyle: Artstyle) {
-    this.apiService.updateArtstyle(this.artstyle.artstyleId, artstyle)
+    this.apiService.updateArtstyle(this.artstyle.artStyleId, artstyle)
     .subscribe(
       response => {
         // with the response, just refresh the list on the right

@@ -1,21 +1,23 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Artwork, ApiService, Artstyle, Artist, Gallery } from 'src/app/core';
+import { Component, OnInit } from '@angular/core';
+import { Artwork, ApiService, Artstyle, Artist, Gallery, FileUpload } from 'src/app/core';
 
 @Component({
-  selector: 'app-admin-artwork-edit',
-  templateUrl: './admin-artwork-edit.component.html',
-  styleUrls: ['./admin-artwork-edit.component.css']
+  selector: 'app-admin-artwork-new',
+  templateUrl: './admin-artwork-new.component.html',
+  styleUrls: ['./admin-artwork-new.component.css']
 })
-export class AdminArtworkEditComponent implements OnInit {
+export class AdminArtworkNewComponent implements OnInit {
 
   artworks: Artwork[];
   artwork: Artwork;
   artists: Artist[];
   galleries: Gallery[];
   artstyles: Artstyle[];
+  selectedFile: File | null;
 
   constructor(private apiService: ApiService) { 
     // create empty objects to store data in
+    this.selectedFile = null;
     this.artworks = [];
     this.artists = [];
     this.galleries = [];
@@ -74,6 +76,18 @@ export class AdminArtworkEditComponent implements OnInit {
     )
   }
 
+  changeArtist(event: any) {
+    this.artwork.artistId = event.target.value;
+  }
+
+  changeGallery(event: any) {
+    this.artwork.galleryId = event.target.value;
+  }
+  
+  changeArtstyle(event: any) {
+    this.artwork.artStyleId = event.target.value;
+  }
+
   clearForm() {
     this.getAllRecords(); 
     this.artwork = {
@@ -90,18 +104,35 @@ export class AdminArtworkEditComponent implements OnInit {
     }
   }
 
-  populateForm(artwork: Artwork) {
-    this.artwork = artwork;
+  onFileSelected(event: any) {
+    this.selectedFile = <File>event.target.files[0];
   }
 
   onSubmit() {
+    // first, need to convert file into form data
+    const fileData = new FormData();
+    if (this.selectedFile != null) {
+      fileData.append('image', this.selectedFile, this.selectedFile.name);
+    }
+
+    // second, need to send the form data to the api
+    this.apiService.sendFile(fileData)
+    .subscribe(
+      response => {
+        // the api sends back the url address of the hosted image
+        this.artwork.imageLocation = response
+      }
+    )
+
+    console.log(this.artwork);
+
     this.apiService.createArtwork(this.artwork)
     .subscribe( 
       response => {
         // once we get a response, clear out the forms
         this.clearForm();
       }
-    )
+    ) 
   }
 
 }

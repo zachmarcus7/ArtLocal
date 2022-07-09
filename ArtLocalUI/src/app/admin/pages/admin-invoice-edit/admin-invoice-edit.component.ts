@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Invoice, ApiService } from 'src/app/core';
+import { Invoice, Artwork, Customer, ApiService } from 'src/app/core';
 
 @Component({
   selector: 'app-admin-invoice-edit',
@@ -10,11 +10,14 @@ export class AdminInvoiceEditComponent implements OnInit {
 
   invoices: Invoice[];
   invoice: Invoice;
+  artwork: Artwork[];
+  customers: Customer[];
 
   constructor(private apiService: ApiService) { 
-
     // create empty objects to store data in
     this.invoices = [];
+    this.artwork = [];
+    this.customers = [];
     this.invoice = {
       invoiceId: "",
       artworkId: "",
@@ -26,6 +29,8 @@ export class AdminInvoiceEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllRecords();
+    this.getAllArtwork();
+    this.getAllCustomers();
   }
 
   getAllRecords() {
@@ -35,6 +40,22 @@ export class AdminInvoiceEditComponent implements OnInit {
         this.invoices = response
       )
     );
+  }
+
+  getAllArtwork() {
+    this.apiService.getAllArtwork()
+    .subscribe(
+      response =>
+        this.artwork = response
+    )
+  }
+
+  getAllCustomers() {
+    this.apiService.getAllCustomers()
+    .subscribe(
+      response =>
+        this.customers = response
+    )
   }
 
   clearForm() {
@@ -48,11 +69,33 @@ export class AdminInvoiceEditComponent implements OnInit {
     };
   }
 
-  populateForm(invoice: Invoice) {
-    // this will work with the two way binding we set up
-    // so that the form will populate with the record details
-    // when that record is clicked on the right
-    this.invoice = invoice;
+  getMatchingArtwork(artworkId: string) {
+    for (var i = 0; i < this.artwork.length; i++) {
+      if (this.artwork[i].artworkId === artworkId) 
+        return (`${this.artwork[i].title}`);
+    }
+    return "Not Found";
   }
 
+  getMatchingCustomer(customerId: string) {
+    for (var i = 0; i < this.customers.length; i++) {
+      if (this.customers[i].customerId === customerId) 
+        return (`${this.customers[i].firstName} ${this.customers[i].lastName}`);
+    }
+    return "Not Found";
+  }
+
+  populateForm(invoice: Invoice) {
+    // first, clear the form
+    this.clearForm();
+
+    // then, create a new artwork object to copy values into
+    var newInvoice = invoice;
+
+    // then, need to update the values that have id's
+    newInvoice.artworkId = this.getMatchingArtwork(invoice.artworkId);
+    newInvoice.customerId = this.getMatchingCustomer(invoice.customerId);
+
+    this.invoice = newInvoice;
+  }
 }
