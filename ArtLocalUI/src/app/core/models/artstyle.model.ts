@@ -1,5 +1,5 @@
 export interface Artstyle {
-    artstyleId: string;
+    artStyleId: string;
     style: string;
     description: string;
 }

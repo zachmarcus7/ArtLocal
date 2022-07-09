@@ -12,7 +12,9 @@ import { AdminLoginComponent,
          AdminArtstyleEditComponent,
          AdminCustomerEditComponent,
          AdminGalleryEditComponent,
-         AdminInvoiceEditComponent } from './admin';
+         AdminInvoiceEditComponent,
+         AdminArtworkExistingComponent,
+         AdminArtworkNewComponent } from './admin';
  
 
 const routes: Routes = [{
@@ -31,7 +33,12 @@ const routes: Routes = [{
   path: 'admin/dashboard', component: AdminDashboardComponent,
   children: [
     { path: 'artists', component: AdminArtistEditComponent}, 
-    { path: 'artwork', component: AdminArtworkEditComponent}, 
+    { path: 'artwork', component: AdminArtworkEditComponent,
+      children: [
+        {path: 'new', component: AdminArtworkNewComponent},
+        {path: 'existing', component: AdminArtworkExistingComponent}
+      ]
+    }, 
     { path: 'artstyles', component: AdminArtstyleEditComponent}, 
     { path: 'galleries', component: AdminGalleryEditComponent}, 
     { path: 'customers', component: AdminCustomerEditComponent}, 

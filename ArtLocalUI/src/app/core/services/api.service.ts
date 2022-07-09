@@ -16,6 +16,7 @@ export class ApiService {
     invoiceUrl: string = this.baseUrl + 'Invoices';
     artstyleUrl: string = this.baseUrl + 'ArtStyles';
     galleryUrl: string = this.baseUrl + 'Galleries';
+    fileUrl: string = this.baseUrl + 'FileUpload';
 
     constructor(private http: HttpClient) {}
 
@@ -84,8 +85,8 @@ export class ApiService {
     }
 
     // Update an Artstyle
-    updateArtstyle(artstyleId: string, updatedArtstyle: Artstyle): Observable<Artstyle> {
-        return this.http.put<Artstyle>(this.artstyleUrl + "/" + artstyleId, updatedArtstyle);
+    updateArtstyle(artStyleId: string, updatedArtstyle: Artstyle): Observable<Artstyle> {
+        return this.http.put<Artstyle>(this.artstyleUrl + "/" + artStyleId, updatedArtstyle);
     }
 
     // Get all Galleries
@@ -121,6 +122,10 @@ export class ApiService {
     // Authenticate an admin's login                                      
     authenticateAdmin(admin: Admin): Observable<HttpResponse<Admin>> {
         return this.http.post<Admin>(this.adminUrl + "/Authentication", admin, {observe: 'response'});
+    }
+
+    sendFile(file: FormData): Observable<any> {
+        return this.http.post(this.fileUrl, file, {responseType: 'text'});
     }
 
 }
