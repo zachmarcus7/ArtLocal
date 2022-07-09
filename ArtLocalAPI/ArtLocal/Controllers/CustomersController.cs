@@ -68,11 +68,12 @@ namespace ArtLocal.Controllers
             return CreatedAtAction("GetCustomer", new { id = customer.CustomerId }, customer);
         }
 
+        // Authenticate a Customer's login request
         // localhost:7195/api/Customers/Authentication                                        
         [HttpPost("Authentication")]
         public async Task<IActionResult> Authenticate([FromBody] Customer customer)
         {
-            // check if user exists in the database
+            // check if the customer exists in the database
             Customer testCustomer = await _dbContext.Customers.FirstOrDefaultAsync(user => user.Username == customer.Username);
 
             if (testCustomer == null)

@@ -1,4 +1,5 @@
 using ArtLocal.Data;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -9,6 +10,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDirectoryBrowser();
+
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MemoryBufferThreshold = Int32.MaxValue;
+    options.MultipartBodyLengthLimit = long.MaxValue;
+});
 
 // inject DbContext
 builder.Services.AddDbContext<ArtLocalDataContext>(options => options.UseSqlServer(

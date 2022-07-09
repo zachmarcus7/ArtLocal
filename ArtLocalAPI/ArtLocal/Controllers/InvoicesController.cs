@@ -56,7 +56,6 @@ namespace ArtLocal.Controllers
         [HttpPost]
         public async Task<ActionResult<Invoice>> PostInvoice(Invoice invoice)
         {
-
             // generate a new GUID for the invoice
             invoice.InvoiceId = Guid.NewGuid();
 
