@@ -15,22 +15,18 @@ import { AdminLoginComponent,
          AdminInvoiceEditComponent,
          AdminArtworkExistingComponent,
          AdminArtworkNewComponent } from './admin';
+import { AdminAuthGuard } from './auth';
  
 
-const routes: Routes = [{
-  path: '', component: HomeComponent
-}, {
-  path: 'login', component: CustomerLoginComponent
-}, {
-  path: 'register', component: CustomerRegisterComponent
-}, {
-  path: 'details', component: DetailsComponent
-}, {
-  path: 'checkout', component: CheckoutComponent
-}, {
-  path: 'admin', component: AdminLoginComponent
-}, {
-  path: 'admin/dashboard', component: AdminDashboardComponent,
+const routes: Routes = [
+{ path: '', component: HomeComponent}, 
+{ path: 'login', component: CustomerLoginComponent }, 
+{ path: 'register', component: CustomerRegisterComponent }, 
+{ path: 'details', component: DetailsComponent }, 
+{ path: 'checkout', component: CheckoutComponent }, 
+{ path: 'admin', component: AdminLoginComponent }, 
+{ path: 'admin/dashboard', component: AdminDashboardComponent,
+  canActivate: [AdminAuthGuard],
   children: [
     { path: 'artists', component: AdminArtistEditComponent}, 
     { path: 'artwork', component: AdminArtworkEditComponent,
