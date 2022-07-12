@@ -1,10 +1,11 @@
-<div class="container pb-5">
+<div class="container pb-5 pt-4">
     <div class="pb-3">
         <h2>Admin Log In</h2>
         <h5>Please enter your details below</h5>
     </div>
     <div class="cards-container row">
       <div class="cards-form col-lg-6 col-md-6 col-sm-12 col-12">
+        <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password</div>
         <form #form="ngForm" (ngSubmit)="login()">         
         <div class="form-group">                            
             <label for="username">Username</label>                   

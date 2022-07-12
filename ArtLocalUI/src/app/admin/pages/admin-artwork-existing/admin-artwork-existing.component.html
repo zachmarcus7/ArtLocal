@@ -5,42 +5,41 @@
         <div class="form-group form-group-inline-half">
             <div>
                 <label for="artistId">Artist</label>
-                <p name="artistId" [(ngModel)]="artwork.artistId">{{artwork.artistId}}</p>
+                <p name="artistId">{{artwork.artistId}}</p>
             </div>
           <div>
             <label for="title">Title</label>
-            <p name="title" [(ngModel)]="artwork.title">{{artwork.title}}</p>
+            <p name="title">{{artwork.title}}</p>
           </div>
         </div>
         <div class="form-group">                            
             <label for="description">Description</label>                   
-            <p name="description" [(ngModel)]="artwork.description">{{artwork.description}}</p>
+            <p name="description">{{artwork.description}}</p>
         </div>
         <div class="form-group form-group-inline-half">
           <div>
             <label for="dateCreated">Date Created</label>                   
-            <p name="dateCreated" [(ngModel)]="artwork.dateCreated">{{artwork.dateCreated}}</p>
+            <p name="dateCreated">{{artwork.dateCreated}}</p>
           </div>
           <div>
             <label for="price">Price</label>                   
-            <p name="price" [(ngModel)]="artwork.price">{{artwork.price}}</p>
+            <p name="price">{{artwork.price}}</p>
           </div>
         </div>
         <div class="form-group">                            
           <label for="imageLocation">Image Location</label>                   
-          <p name="imageLocation" [(ngModel)]="artwork.imageLocation">{{artwork.imageLocation}}</p>
+          <p name="imageLocation">{{artwork.imageLocation}}</p>
         </div>
         <div class="form-group form-group-inline-half">
           <div>
               <label for="gallery">Gallery</label>
-              <p name="galleryId" [(ngModel)]="artwork.galleryId">{{artwork.galleryId}}</p>
+              <p name="galleryId">{{artwork.galleryId}}</p>
           </div>
           <div>
               <label for="artyStyle">Style</label>
-              <p name="artStyleId" [(ngModel)]="artwork.artStyleId">{{artwork.artStyleId}}</p>
+              <p name="artStyleId">{{artwork.artStyleId}}</p>
           </div>
         </div>
-
         <div class="pl-0">
             <a class="mb-2">
               <button class="general-button-black" (click)="clearForm()">Clear Data</button>
@@ -49,7 +48,6 @@
         </form>
       </div>
     </div>
-    
     <div class="cards-grid col-lg-6 col-md-12">
       <div class="records-row" *ngFor="let artwork of artworks">
         <div class="records-row-details" (click)="populateForm(artwork)">
@@ -57,5 +55,4 @@
         </div>
       </div>
     </div> 
-
   </div>

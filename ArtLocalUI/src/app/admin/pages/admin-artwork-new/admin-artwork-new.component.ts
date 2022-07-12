@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Artwork, ApiService, Artstyle, Artist, Gallery, FileUpload } from 'src/app/core';
+import { Artwork, ApiService, Artstyle, Artist, Gallery } from 'src/app/core';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-artwork-new',
@@ -111,28 +112,23 @@ export class AdminArtworkNewComponent implements OnInit {
   onSubmit() {
     // first, need to convert file into form data
     const fileData = new FormData();
-    if (this.selectedFile != null) {
+    if (this.selectedFile != null) 
       fileData.append('image', this.selectedFile, this.selectedFile.name);
-    }
-
-    // second, need to send the form data to the api
+    
+    // then, need to send the file to the FileUpload endpoint
+    // then wait for the image location url to be sent back
+    // once it is, can then send the updated artwork object
     this.apiService.sendFile(fileData)
-    .subscribe(
-      response => {
-        // the api sends back the url address of the hosted image
-        this.artwork.imageLocation = response
-      }
+    .pipe(
+      switchMap(result => {
+        this.artwork.imageLocation = result
+        return this.apiService.createArtwork(this.artwork)
+      })
     )
-
-    console.log(this.artwork);
-
-    this.apiService.createArtwork(this.artwork)
-    .subscribe( 
-      response => {
-        // once we get a response, clear out the forms
-        this.clearForm();
-      }
-    ) 
+    .subscribe(results => {
+      this.clearForm();
+    })
   }
 
 }
+
