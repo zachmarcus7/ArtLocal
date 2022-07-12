@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtLocal.Data;
 using ArtLocal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtLocal.Controllers
 {
@@ -23,6 +24,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Invoices
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<Invoice>>> GetInvoice()
         {
             if (_dbContext.Invoice == null)
@@ -35,6 +37,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Invoices/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Invoice>> GetInvoice(int id)
         {
             if (_dbContext.Invoice == null)
@@ -54,6 +57,7 @@ namespace ArtLocal.Controllers
 
         // POST: api/Invoices
         [HttpPost]
+        [Authorize(Roles = "customer")]
         public async Task<ActionResult<Invoice>> PostInvoice(Invoice invoice)
         {
             // generate a new GUID for the invoice
@@ -69,57 +73,6 @@ namespace ArtLocal.Controllers
 
             return CreatedAtAction("GetInvoice", new { id = invoice.InvoiceId }, invoice);
         }
-
-        // PUT: api/Invoices/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutInvoice(Guid id, Invoice invoice)
-        {
-            if (id != invoice.InvoiceId)
-            {
-                return BadRequest();
-            }
-
-            _dbContext.Entry(invoice).State = EntityState.Modified;
-
-            try
-            {
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InvoiceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Invoices/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteInvoice(Guid id)
-        {
-            if (_dbContext.Invoice == null)
-            {
-                return NotFound();
-            }
-            var invoice = await _dbContext.Invoice.FindAsync(id);
-            if (invoice == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Invoice.Remove(invoice);
-            await _dbContext.SaveChangesAsync();
-
-            return NoContent();
-        }
-
         private bool InvoiceExists(Guid id)
         {
             return (_dbContext.Invoice?.Any(e => e.InvoiceId == id)).GetValueOrDefault();

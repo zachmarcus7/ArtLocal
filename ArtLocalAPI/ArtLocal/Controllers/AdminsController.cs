@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtLocal.Data;
 using ArtLocal.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtLocal.Controllers
 {
@@ -23,6 +28,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Admins
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmin()
         {
           if (_dbContext.Admins == null)
@@ -34,6 +40,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Admins/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Admin>> GetAdmin(Guid id)
         {
           if (_dbContext.Admins == null)
@@ -50,9 +57,10 @@ namespace ArtLocal.Controllers
             return admin;
         }
 
-        // Create a new Admin
-        // this is here just for testing purposes
+        // POST: api/Admins
+        // Note: This is left anonymous for testing purposes
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Admin>> PostAdmin(Admin admin)
         {
             // generate a new GUID for the admin
@@ -69,27 +77,5 @@ namespace ArtLocal.Controllers
             return CreatedAtAction("GetAdmin", new { id = admin.AdminId }, admin);
         }
 
-        // Authenticate an Admin's login request
-        // localhost:7195/api/Admins/Authentication                                        
-        [HttpPost("Authentication")]
-        public async Task<IActionResult> Authenticate([FromBody] Admin admin)
-        {
-            // check if the admin exists in the database
-            Admin test = await _dbContext.Admins.FirstOrDefaultAsync(user => user.Username == admin.Username);
-
-            if (test == null)
-            {
-                return NoContent();
-            }
-
-            // test if the credentials match
-            if ((admin.Username == test.Username) &&
-                (admin.Password == test.Password))
-            {
-                return Ok();
-            }
-            return NoContent();
-
-        }
     }
 }

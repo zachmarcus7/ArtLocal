@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtLocal.Data;
 using ArtLocal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtLocal.Controllers
 {
@@ -52,6 +53,7 @@ namespace ArtLocal.Controllers
 
         // POST: api/Artists
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Artist>> PostArtist(Artist artist)
         {
             // generate a new GUID for the artist
@@ -69,6 +71,7 @@ namespace ArtLocal.Controllers
 
         // PUT: api/Artists/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> PutArtist(Guid id, Artist artist)
         {
             if (id != artist.ArtistId)
@@ -93,26 +96,6 @@ namespace ArtLocal.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Artists/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArtist(Guid id)
-        {
-            if (_dbContext.Artists == null)
-            {
-                return NotFound();
-            }
-            var artist = await _dbContext.Artists.FindAsync(id);
-            if (artist == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Artists.Remove(artist);
-            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }

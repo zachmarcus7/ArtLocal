@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtLocal.Data;
 using ArtLocal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtLocal.Controllers
 {
@@ -23,6 +24,7 @@ namespace ArtLocal.Controllers
 
         // Get all Customers
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomers()
         {
             if (_dbContext.Customers == null)
@@ -33,7 +35,8 @@ namespace ArtLocal.Controllers
         }
 
         // Get a specific Customer
-        [HttpGet("{id}")]                                  
+        [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Customer>> GetCustomer(Guid id)
         {
             if (_dbContext.Customers == null)
@@ -52,6 +55,7 @@ namespace ArtLocal.Controllers
 
         // Create a new Customer
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Customer>> PostCustomer(Customer customer)
         {
             // generate a new GUID for the customer
@@ -66,49 +70,6 @@ namespace ArtLocal.Controllers
             await _dbContext.SaveChangesAsync();
 
             return CreatedAtAction("GetCustomer", new { id = customer.CustomerId }, customer);
-        }
-
-        // Authenticate a Customer's login request
-        // localhost:7195/api/Customers/Authentication                                        
-        [HttpPost("Authentication")]
-        public async Task<IActionResult> Authenticate([FromBody] Customer customer)
-        {
-            // check if the customer exists in the database
-            Customer testCustomer = await _dbContext.Customers.FirstOrDefaultAsync(user => user.Username == customer.Username);
-
-            if (testCustomer == null)
-            {
-                return NoContent();
-            }
-
-            // test if the credentials match
-            if ((customer.Username == testCustomer.Username) &&
-                (customer.Password == testCustomer.Password))
-            {
-                return Ok(testCustomer);
-            }
-            return NoContent();
-           
-        }
-
-        // DELETE: api/Customers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCustomer(Guid id)
-        {
-            if (_dbContext.Customers == null)
-            {
-                return NotFound();
-            }
-            var customer = await _dbContext.Customers.FindAsync(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Customers.Remove(customer);
-            await _dbContext.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool CustomerExists(Guid id)

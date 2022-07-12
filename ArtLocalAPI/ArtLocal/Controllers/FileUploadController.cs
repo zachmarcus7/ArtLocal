@@ -1,4 +1,5 @@
 ﻿using ArtLocal.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
@@ -18,6 +19,7 @@ namespace ArtLocal.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public IActionResult UploadFile()
         {
             var file = HttpContext.Request.Form.Files[0];

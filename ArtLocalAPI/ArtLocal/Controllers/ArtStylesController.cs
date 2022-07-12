@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtLocal.Data;
 using ArtLocal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtLocal.Controllers
 {
@@ -52,6 +53,7 @@ namespace ArtLocal.Controllers
 
         // POST: api/ArtStyles
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<ArtStyle>> PostArtStyle(ArtStyle artStyle)
         {
             // generate a new GUID for the art style
@@ -65,56 +67,6 @@ namespace ArtLocal.Controllers
             await _dbContext.SaveChangesAsync();
 
             return CreatedAtAction("GetArtStyle", new { id = artStyle.ArtStyleId }, artStyle);
-        }
-
-        // PUT: api/ArtStyles/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtStyle(Guid id, ArtStyle artStyle)
-        {
-            if (id != artStyle.ArtStyleId)
-            {
-                return BadRequest();
-            }
-
-            _dbContext.Entry(artStyle).State = EntityState.Modified;
-
-            try
-            {
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ArtStyleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // DELETE: api/ArtStyles/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArtStyle(Guid id)
-        {
-            if (_dbContext.ArtStyle == null)
-            {
-                return NotFound();
-            }
-            var artStyle = await _dbContext.ArtStyle.FindAsync(id);
-            if (artStyle == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.ArtStyle.Remove(artStyle);
-            await _dbContext.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool ArtStyleExists(Guid id)

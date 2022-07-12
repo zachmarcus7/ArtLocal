@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtLocal.Data;
 using ArtLocal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtLocal.Controllers
 {
@@ -23,6 +24,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Artworks
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Artwork>>> GetArtwork()
         {
           if (_dbContext.Artwork == null)
@@ -34,6 +36,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Artworks/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Artwork>> GetArtwork(Guid id)
         {
           if (_dbContext.Artwork == null)
@@ -52,6 +55,7 @@ namespace ArtLocal.Controllers
 
         // POST: api/Artworks
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Artwork>> PostArtwork(Artwork artwork)
         {
             // generate a new GUID for the artwork
@@ -69,18 +73,20 @@ namespace ArtLocal.Controllers
         }
 
         // PUT: api/Artworks/5
+        // Here, the customer can update the artwork only when buying one
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutArtwork(Guid id, Artwork artwork)
+        [Authorize(Roles = "customer")]
+        public async Task<IActionResult> PutArtist(Guid id, Artwork artwork)
         {
             if (id != artwork.ArtworkId)
             {
                 return BadRequest();
             }
 
-            _dbContext.Entry(artwork).State = EntityState.Modified;
-
             try
             {
+                // only allow the sold property to be modified 
+                _dbContext.Entry(artwork).Property(x => x.Sold).IsModified = true;
                 await _dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -94,26 +100,6 @@ namespace ArtLocal.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Artworks/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteArtwork(Guid id)
-        {
-            if (_dbContext.Artwork == null)
-            {
-                return NotFound();
-            }
-            var artwork = await _dbContext.Artwork.FindAsync(id);
-            if (artwork == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Artwork.Remove(artwork);
-            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }

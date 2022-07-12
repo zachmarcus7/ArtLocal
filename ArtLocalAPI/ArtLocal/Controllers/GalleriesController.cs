@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArtLocal.Data;
 using ArtLocal.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ArtLocal.Controllers
 {
@@ -23,6 +24,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Galleries
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Gallery>>> GetGalleries()
         {
           if (_dbContext.Galleries == null)
@@ -34,6 +36,7 @@ namespace ArtLocal.Controllers
 
         // GET: api/Galleries/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Gallery>> GetGallery(Guid id)
         {
           if (_dbContext.Galleries == null)
@@ -52,6 +55,7 @@ namespace ArtLocal.Controllers
 
         // POST: api/Galleries
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<Gallery>> PostGallery(Gallery gallery)
         {
             // generate a new GUID for the gallery
@@ -70,6 +74,7 @@ namespace ArtLocal.Controllers
 
         // PUT: api/Galleries/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutGallery(Guid id, Gallery gallery)
         {
             if (id != gallery.GalleryId)
@@ -94,26 +99,6 @@ namespace ArtLocal.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
-        }
-
-        // DELETE: api/Galleries/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGallery(Guid id)
-        {
-            if (_dbContext.Galleries == null)
-            {
-                return NotFound();
-            }
-            var gallery = await _dbContext.Galleries.FindAsync(id);
-            if (gallery == null)
-            {
-                return NotFound();
-            }
-
-            _dbContext.Galleries.Remove(gallery);
-            await _dbContext.SaveChangesAsync();
 
             return NoContent();
         }
