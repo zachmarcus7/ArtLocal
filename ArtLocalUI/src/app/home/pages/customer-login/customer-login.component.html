@@ -5,7 +5,8 @@
     </div>
     <div class="cards-container row">
       <div class="cards-form col-lg-6 col-md-6 col-sm-12 col-12">
-        <form #form="ngForm" (ngSubmit)="login()">         
+        <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password</div>
+        <form #form="ngForm">         
         <div class="form-group">                            
             <label for="username">Username</label>                   
             <input type="text" name="username" [(ngModel)]="customer.userName">
@@ -13,10 +14,10 @@
             <input type="text" name="password" [(ngModel)]="customer.password">
         </div>
         <div>
-            <p>Need to create an account? <span><a [routerLink]="['/register']">Register Here.</a></span></p>
+            <p>Need to create an account? <span><a class="teal-text" [routerLink]="['/register']">Register Here.</a></span></p>
         </div>
         <div class="pl-0">
-            <a [routerLink]="['/']" class="mr-3 mb-2 pb-3">
+            <a class="mr-3 mb-2 pb-3">
               <button class="general-button-green" (click)="login()">Log In</button>
             </a>
             <a [routerLink]="['/']" class="mb-2">

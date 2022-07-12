@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminAuthenticationService, AuthenticationService } from 'src/app/core';
+import { AuthService } from 'src/app/core';
+import { Router, ActivatedRoute } from '@angular/router';
  
 @Component({
   selector: 'app-header',
@@ -8,34 +9,52 @@ import { AdminAuthenticationService, AuthenticationService } from 'src/app/core'
 })
 export class HeaderComponent implements OnInit {
 
-  loggedIn: boolean;
+  customerLoggedIn: boolean;
   adminLoggedIn: boolean;
   currentName: string;
+  showCustomerLogIn: boolean;
 
-  constructor(private authenticationService: AuthenticationService,
-              private adminAuthenticationService: AdminAuthenticationService) {
+  constructor(private authService: AuthService,
+              private router: Router) {
                 
-    this.loggedIn = false;
+    this.customerLoggedIn = false;
     this.adminLoggedIn = false;
     this.currentName = "";
+    this.showCustomerLogIn = true;
+
+    // check if we're on one of the admin pages
+    // if so, then the login option becomes disabled
+    router.events.subscribe(event => {
+      // get the current values from the route
+      var routeSplit = (router.url.split('/'));
+
+      // if the admin keyword is in the route, don't show log in
+      if (routeSplit.includes('admin')) {
+        this.showCustomerLogIn = false;
+      }
+      else {
+        this.showCustomerLogIn = true;
+      }
+    });
   }
 
   ngOnInit() {
-    this.getLoggedInValue();
+    this.getCustomerLoggedInValue();
+    this.getAdminLoggedInValue();
     this.getNameValue();
   }
 
-  getLoggedInValue() {
-    this.authenticationService.isLoggedIn()
+  getCustomerLoggedInValue() {
+    this.authService.customerLoggerObs()
     .subscribe(
       response => (
-        this.loggedIn = response
+        this.customerLoggedIn = response
       )
     )
   }
 
   getAdminLoggedInValue() {
-    this.adminAuthenticationService.isLoggedIn()
+    this.authService.adminLoggerObs()
     .subscribe(
       response => (
         this.adminLoggedIn = response
@@ -44,7 +63,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getNameValue() {
-    this.authenticationService.getCurrentName()
+    this.authService.getCurrentName()
     .subscribe(
       response => (
         this.currentName = response
@@ -53,7 +72,12 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
-    this.authenticationService.logOut();
+    if (this.customerLoggedIn) {
+      this.authService.customerLogOut();
+    }
+    else {
+      this.authService.adminLogOut();
+    }
   }
 }
 

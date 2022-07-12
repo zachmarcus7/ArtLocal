@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer, ApiService, AuthenticationService} from 'src/app/core';
+import { Customer, ApiService, AuthService} from 'src/app/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -16,7 +16,7 @@ export class CustomerRegisterComponent {
   // inject services for router, api, and authentication
   constructor(private router: Router, 
               private apiService: ApiService,
-              private authenticationService: AuthenticationService) { 
+              private authService: AuthService) { 
 
     // initialize an empty customer object
     // set the ID to an empty GUID value
@@ -41,17 +41,24 @@ export class CustomerRegisterComponent {
     this.apiService.createCustomer(this.customer)
     .subscribe(
       response => (
-        this.saveCustomer(response)
+        this.login()
       )
     )
   }
 
-  saveCustomer(response: Customer | null) {
-    // save the current user
-    if (response != null) {
-      this.authenticationService.logIn(response);
-      this.router.navigate(['/']);
-    }
+  login(): void {
+    this.apiService.authenticateCustomer(this.customer)
+    .subscribe(
+      response => {
+        // if the response isn't null, that means the customer
+        // credentials were authenticated and a jwt was sent back
+        if (response) {
+          const token = response;
+          this.authService.customerLogIn(token, this.customer);
+          this.router.navigate(['/']);
+        }
+      }
+    )
   }
 
 }

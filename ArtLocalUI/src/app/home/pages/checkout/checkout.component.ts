@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer, ApiService, Invoice, AuthenticationService, Artwork } from 'src/app/core';
+import { Customer, ApiService, AuthService, Invoice, Artwork } from 'src/app/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class CheckoutComponent implements OnInit {
   // inject the api and authentication services into the constructor
   constructor(private router: Router, 
               private apiService: ApiService,
-              private authenticationService: AuthenticationService,
+              private authService: AuthService,
               private route: ActivatedRoute,) { 
 
     // this is for checking if a current customer is logged in
@@ -79,7 +79,7 @@ export class CheckoutComponent implements OnInit {
   // this is for keeping track if a customer is currently logged in and
   // can place an order
   getLoggedInValue() {
-    this.loggedIn = this.authenticationService.isLoggedInNow();
+    this.loggedIn = this.authService.customerLoggedInNow();
   }
 
   getArtworkId() {
@@ -123,7 +123,7 @@ export class CheckoutComponent implements OnInit {
     if (this.loggedIn == true) {
       // first, update the invoice and the artwork
       this.invoice.artworkId = this.artworkId;
-      this.invoice.customerId = this.authenticationService.getCurrentId();
+      this.invoice.customerId = this.authService.getCurrentId();
       this.invoice.dateBought = new Date();
       this.invoice.sellPrice = this.artwork.price;
       this.artwork.sold = true;

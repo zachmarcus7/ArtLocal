@@ -16,7 +16,7 @@ import { HeaderComponent, FooterComponent } from './layout';
   ],
   declarations: [ 
     HeaderComponent, 
-    FooterComponent 
+    FooterComponent
   ],
   exports: [
     CommonModule,

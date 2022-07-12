@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { AdminAuthenticationService, ApiService, AuthenticationService } from './services';
+import { TokenInterceptor } from './interceptors';
+import { ApiService, AuthService } from './services';
  
  
 @NgModule({
@@ -8,8 +9,8 @@ import { AdminAuthenticationService, ApiService, AuthenticationService } from '.
   exports: [],
   providers: [
     ApiService,
-    AuthenticationService,
-    AdminAuthenticationService
+    AuthService,
+    TokenInterceptor
   ]
 })
 export class CoreModule {
