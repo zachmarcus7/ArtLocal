@@ -19,11 +19,6 @@ import { HeaderComponent, FooterComponent } from './layout';
     FooterComponent
   ],
   exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterModule,
     HeaderComponent,
     FooterComponent
   ]
