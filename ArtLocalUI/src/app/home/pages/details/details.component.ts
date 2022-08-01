@@ -21,32 +21,8 @@ export class DetailsComponent  {
     // to get the values from the parameters
     this.artworkId = "";
     this.sold = false;
-
-    this.artwork = {
-      artworkId: "",
-      artistId: "",
-      title: "",
-      description: "",
-      dateCreated: "",
-      price: 0,
-      imageLocation: "",
-      sold: false,
-      galleryId: "",
-      artStyleId: ""
-    }
-
-    this.artist = {
-      artistId: "",
-      firstName:"",
-      lastName: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: "",
-      description: "",
-    }
+    this.artwork = new Artwork();
+    this.artist = new Artist();
   }
 
   ngOnInit() {

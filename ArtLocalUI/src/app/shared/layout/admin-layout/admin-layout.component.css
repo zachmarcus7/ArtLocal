@@ -1,0 +1,189 @@
+/*=====================================================================
+
+   a. General Styles
+   b. Material Expansion Panel 
+   c. 
+
+===================================================================== */
+
+/* ------------------------------------------------------------------ */
+/* a. General Styles
+/* ------------------------------------------------------------------ */
+
+::ng-deep :root {
+  --teal-color: rgb(54, 112, 113);
+  --dark-blue: rgb(37, 42, 46);
+  --dark-blue-one: rgb(43, 56, 67);
+  --dark-blue-two: rgb(34, 45, 57);
+  --mid-blue: rgb(84, 99, 120);
+  --light-blue: rgb(73, 172, 221);
+  --light-grey: rgb(170, 170, 170);
+  --light-grey-one: rgb(244, 245, 249);
+}
+
+mat-sidenav-container {
+  height: 100%;
+  background: var(--light-grey-one);
+}
+
+mat-sidenav, mat-sidenav-content {
+  padding: 16px;
+}
+
+mat-sidenav {
+  padding: 0;
+  width: 260px;
+  background-color: var(--dark-blue);
+}
+
+ul {
+  padding-left: 0;
+}
+
+.nav-container {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navigation {
+  height: 100%;
+  background: white;
+  transition: 0.5s;
+  overflow: hidden;
+}
+
+.navigation ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navigation ul li {
+  position: relative;
+  width: 100%;
+  list-style: none;
+}
+
+.navigation ul li a,
+mat-expansion-header {
+  position: relative;
+  display: block;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--light-grey);
+}
+
+.navigation ul li a .icon,
+.expanded-icon {
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  transition: 0.2s ease;
+}
+
+.navigation ul li a .icon .fa {
+  color: var(--light-grey);
+  font-size: 24px;
+}
+
+.navigation ul li a .title,
+.expanded-title {
+  position: relative;
+  display: block;
+  padding: 0 10px;
+  height: 60px;
+  line-height: 60px;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.active {
+  background-color: var(--dark-blue-one);
+  border-left: 4px solid #49ACDD;
+  pointer-events: none;
+}
+
+.expanded-active {
+  background-color: var(--dark-blue-one);
+  border-left: 4px solid #49ACDD;
+  color: white !important;
+  transition: 0.2s ease;
+}
+
+.active a .title,
+.active a .icon {
+  color: white;
+}
+
+.navigation ul .side-nav-link:hover a .title,
+.navigation ul .side-nav-link:hover a .icon {
+  color: white;
+}
+
+.navigation ul li:hover {
+  transition: 0.3s ease-in;
+  background-color: var(--dark-blue-one);
+}
+
+.expanded-link:hover {
+  background-color: var(--dark-blue-one);
+  color: white;
+}
+
+.expanded-link {
+  padding-left: 60px !important;
+}
+
+.top-title {
+  color: var(--light-grey);
+  padding-left: 30px;
+  padding-bottom: 10px;
+}
+
+.top-title:hover {
+  background-color: var(--dark-blue);
+}
+
+.nav-container {
+  padding-top: 200px;
+}
+
+/* ------------------------------------------------------------------ */
+/* b. Material Expansion Panel
+/* ------------------------------------------------------------------ */
+
+mat-expansion-panel {
+  background-color: var(--dark-blue);
+  color: var(--light-grey);
+  border-radius: none;
+  border: none;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
+
+.mat-expansion-panel-header {
+  padding-left: 0;
+}
+
+.expansion-body {
+  width: 100%;
+}
+
+.expansion-body a span {
+  width: 100%;
+}
+
+.mat-expansion-panel:not(.mat-expanded):not([aria-disabled=true]) .mat-expansion-panel-header:hover {
+    background: var(--dark-blue);
+}
+

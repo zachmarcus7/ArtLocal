@@ -1,0 +1,97 @@
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow main-nav fixed-top">
+  <div class="container-fluid">
+    <div *ngIf="displayLogo; then displayTitle else displayToggle"></div>
+    <ng-template #displayTitle>
+      <a class="navbar-brand" [routerLink]="['/admin/dashboard']" #regularBlock>
+        <h4>ArtLocal</h4>
+      </a>
+    </ng-template>
+    <ng-template #displayToggle>
+      <div class="sidebar-toggle" (click)="sidenavOpened=!sidenavOpened">
+        <i class="fa-solid fa-bars navbar-icon" style="color: white; cursor: pointer;"></i>
+      </div>
+    </ng-template>
+    <div *ngIf="adminLoggedIn; then adminLoggedInBlock else adminLoggedOutBlock"></div>
+    <ng-template #adminLoggedInBlock>
+      <div class="navbar-user-container">
+        <a class="text-link" [routerLink]="['/admin']" (click)="logOut()">
+          <p>Log Out</p>
+        </a>
+      </div>
+    </ng-template>
+    <ng-template #adminLoggedOutBlock>
+    </ng-template>
+  </div>
+</nav>
+
+
+<mat-sidenav-container>
+  <mat-sidenav [mode]="isLargeScreen() ? 'side' : 'over'" [(opened)]="sidenavOpened" class="pt-3 no-v-scroll" [autoFocus]="false">
+    <div class="nav-container">
+      <div class="navigation">
+        <ul class="pt-2">
+          <li>
+            <span class="top-title d-flex align-items-center"><h6>NAVIGATION</h6></span>
+          </li>
+          <li [routerLinkActive]="['active']" class="side-nav-link">
+            <a [routerLink]="['/admin/dashboard/artists']">
+              <span class="icon"><i class="fa-solid fa-person"></i></span>
+              <span class="title d-flex align-items-center"><h4>Artists</h4></span>
+            </a>
+          </li>
+          <li>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <span class="expanded-icon"><i class="fa-solid fa-paintbrush"></i></span>
+                <span class="expanded-title d-flex align-items-center"><h4>Artwork</h4></span>
+              </mat-expansion-panel-header>
+
+              <div class="expansion-body">
+                <a [routerLink]="['/admin/dashboard/artwork/new']" [routerLinkActive]="['expanded-active']">
+                  <span class="title expanded-link">New Artwork</span>
+                </a>
+                <a [routerLink]="['/admin/dashboard/artwork/existing']" [routerLinkActive]="['expanded-active']">
+                  <span class="title expanded-link">Existing Artwork</span>
+                </a>
+              </div>
+            </mat-expansion-panel>
+
+          </li>
+          <li [routerLinkActive]="['active']" class="side-nav-link">
+            <a [routerLink]="['/admin/dashboard/artstyles']">
+              <span class="icon"><i class="fa-solid fa-palette"></i></span>
+              <span class="title d-flex align-items-center"><h4>Artstyles</h4></span>
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="side-nav-link">
+            <a [routerLink]="['/admin/dashboard/galleries']">
+              <span class="icon"><i class="fa-solid fa-building"></i></span>
+              <span class="title d-flex align-items-center"><h4>Galleries</h4></span>
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="side-nav-link">
+            <a [routerLink]="['/admin/dashboard/customers']">
+              <span class="icon"><i class="fa-solid fa-person"></i></span>
+              <span class="title d-flex align-items-center"><h4>Customers</h4></span>
+            </a>
+          </li>
+          <li [routerLinkActive]="['active']" class="side-nav-link">
+            <a [routerLink]="['/admin/dashboard/invoices']">
+              <span class="icon"><i class="fa-solid fa-receipt"></i></span>
+              <span class="title d-flex align-items-center"><h4>Invoices</h4></span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+

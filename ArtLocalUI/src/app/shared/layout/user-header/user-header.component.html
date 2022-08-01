@@ -1,0 +1,39 @@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow main-nav">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" [routerLink]="['/']">
+                <h4>ArtLocal</h4>
+            </a>
+            <div *ngIf="showCustomerLogIn; then customerBlock else adminBlock"></div>
+            <ng-template #customerBlock>
+                <div *ngIf="customerLoggedIn; then customerLoggedInBlock else customerLoggedOutBlock"></div>
+                <ng-template #customerLoggedInBlock>
+                    <div class="navbar-user-container">
+                        <p class="white-text">Welcome {{this.currentName}}!</p>
+                        <a class="text-link" [routerLink]="['/']" (click)="logOut()">
+                            <p>Log Out</p>
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template #customerLoggedOutBlock>
+                    <a class="text-link" [routerLink]="['/login']">
+                        <p>Log In</p>
+                    </a>
+                </ng-template>
+            </ng-template>
+            <ng-template #adminBlock>
+                <div *ngIf="adminLoggedIn; then adminLoggedInBlock else adminLoggedOutBlock"></div>
+                <ng-template #adminLoggedInBlock>
+                    <div class="navbar-user-container">
+                        <a class="text-link" [routerLink]="['/admin']" (click)="logOut()">
+                            <p>Log Out</p>
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template #adminLoggedOutBlock>
+                </ng-template>
+            </ng-template>
+        </div>
+    </nav>
+</header>

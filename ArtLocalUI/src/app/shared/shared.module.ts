@@ -1,27 +1,43 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent, FooterComponent } from './layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+import { HeaderComponent, 
+         FooterComponent,
+         UserHeaderComponent,
+         UserLayoutComponent,
+         AdminLayoutComponent,
+         BlankHeaderComponent} from './layout';
+import { BlankLayoutComponent } from './layout/blank-layout/blank-layout.component';
  
  
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterModule
+    RouterModule,
+    MatSidenavModule,
+    MatExpansionModule
   ],
   declarations: [ 
     HeaderComponent, 
-    FooterComponent
+    FooterComponent, 
+    UserHeaderComponent, 
+    UserLayoutComponent, 
+    AdminLayoutComponent,
+    BlankHeaderComponent,
+    BlankLayoutComponent
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AdminLayoutComponent,
+    UserHeaderComponent,
+    UserLayoutComponent,
+    BlankHeaderComponent
   ]
 })
 export class SharedModule {
 }
+

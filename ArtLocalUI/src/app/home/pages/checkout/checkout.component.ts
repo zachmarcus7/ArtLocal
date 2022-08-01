@@ -30,44 +30,10 @@ export class CheckoutComponent implements OnInit {
     this.loggedIn = false;
     this.artworkId = "";
 
-    // initialize an empty customer object
-    // set the ID to an empty GUID value
-    this.customer = {
-      customerId: "00000000-0000-0000-0000-000000000000",
-      firstName:"",
-      lastName: "",
-      userName: "",
-      password: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: ""
-    }
-
-    // also initialize an empty invoice object
-    this.invoice = {
-      invoiceId: "00000000-0000-0000-0000-000000000000",
-      artworkId: "",
-      customerId: "",
-      dateBought: new Date(),
-      sellPrice: 0
-    }
-
-    // as well as an empty artwork object
-    this.artwork = {
-      artworkId: "00000000-0000-0000-0000-000000000000",
-      artistId: "00000000-0000-0000-0000-000000000000",
-      title: "",
-      description: "",
-      dateCreated: "",
-      price: 0,
-      imageLocation: "",
-      sold: false,
-      galleryId: "00000000-0000-0000-0000-000000000000",
-      artStyleId: "00000000-0000-0000-0000-000000000000",
-    }
+    // initialize empty objects to store data in
+    this.customer = new Customer();
+    this.invoice = new Invoice();
+    this.artwork = new Artwork();
   }
 
   ngOnInit() {

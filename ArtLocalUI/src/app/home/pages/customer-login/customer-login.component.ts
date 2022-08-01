@@ -22,19 +22,7 @@ export class CustomerLoginComponent  {
     // create an empty customer object to send to the
     // backend to test against, since only the userName
     // and password will be tested
-    this.customer = {
-      customerId: "00000000-0000-0000-0000-000000000000",
-      firstName:"firstName",
-      lastName: "lastName",
-      userName: "",
-      password: "",
-      address: "address",
-      city: "city",
-      state: "state",
-      postalCode: 1,
-      country: "country",
-      phoneNumber: "phoneNumber"
-    }
+    this.customer = new Customer(true);
 
     // also set the login state
     this.invalidLogin = false;

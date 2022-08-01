@@ -21,6 +21,7 @@ import { HomeComponent,
   declarations: [ 
     HomeComponent, 
     DetailsComponent, 
+    CheckoutComponent,
     CustomerRegisterComponent, 
     CustomerLoginComponent
   ],

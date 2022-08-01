@@ -20,19 +20,7 @@ export class CustomerRegisterComponent {
 
     // initialize an empty customer object
     // set the ID to an empty GUID value
-    this.customer = {
-      customerId: "00000000-0000-0000-0000-000000000000",
-      firstName:"",
-      lastName: "",
-      userName: "",
-      password: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: ""
-    }
+    this.customer = new Customer();
 
   }
 
