@@ -15,16 +15,7 @@ export class AdminGalleryEditComponent implements OnInit {
 
     // create empty objects to store data in
     this.galleries = [];
-    this.gallery = {
-      galleryId: "00000000-0000-0000-0000-000000000000",
-      name: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: ""
-    }
+    this.gallery = new Gallery();
   }
 
   ngOnInit(): void {
@@ -42,16 +33,7 @@ export class AdminGalleryEditComponent implements OnInit {
 
   clearForm() {
     this.getAllRecords(); 
-    this.gallery = {
-      galleryId: "00000000-0000-0000-0000-000000000000",
-      name: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: ""
-    }
+    this.gallery = new Gallery();
   }
 
   onSubmit() {

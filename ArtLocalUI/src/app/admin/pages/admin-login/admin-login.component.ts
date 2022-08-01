@@ -18,11 +18,7 @@ export class AdminLoginComponent {
               private router: Router) {
                 
     // create an empty admin object to store data from form in
-    this.admin = {
-      adminId: "00000000-0000-0000-0000-000000000000",
-      userName: "",
-      password: ""
-    }
+    this.admin = new Admin();
 
     // set the invalidLogin to false since no login attempts have been made yet
     this.invalidLogin = false;

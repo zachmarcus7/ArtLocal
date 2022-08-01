@@ -12,22 +12,9 @@ export class AdminCustomerEditComponent implements OnInit {
   customer: Customer;
 
   constructor(private apiService: ApiService) { 
-
     // create empty objects to store data in
     this.customers = [];
-    this.customer = {
-      customerId: "00000000-0000-0000-0000-000000000000",
-      firstName:"",
-      lastName: "",
-      userName: "",
-      password: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: "",
-    };
+    this.customer = new Customer();
   }
 
   ngOnInit(): void {
@@ -45,19 +32,7 @@ export class AdminCustomerEditComponent implements OnInit {
 
   clearForm() {
     this.getAllRecords(); 
-    this.customer = {
-      customerId: "00000000-0000-0000-0000-000000000000",
-      firstName:"",
-      lastName: "",
-      userName: "",
-      password: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: "",
-    };
+    this.customer = new Customer();
   }
 
   onSubmit() {

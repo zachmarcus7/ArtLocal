@@ -18,13 +18,7 @@ export class AdminInvoiceEditComponent implements OnInit {
     this.invoices = [];
     this.artwork = [];
     this.customers = [];
-    this.invoice = {
-      invoiceId: "",
-      artworkId: "",
-      customerId: "",
-      dateBought: new Date(''),
-      sellPrice: 0
-    }
+    this.invoice = new Invoice();
   }
 
   ngOnInit(): void {
@@ -60,13 +54,7 @@ export class AdminInvoiceEditComponent implements OnInit {
 
   clearForm() {
     this.getAllRecords(); 
-    this.invoice = {
-      invoiceId: "",
-      artworkId: "",
-      customerId: "",
-      dateBought: new Date(''),
-      sellPrice: 0
-    };
+    this.invoice = new Invoice();
   }
 
   getMatchingArtwork(artworkId: string) {

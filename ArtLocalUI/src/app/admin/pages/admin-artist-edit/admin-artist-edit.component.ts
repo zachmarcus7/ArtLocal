@@ -12,21 +12,9 @@ export class AdminArtistEditComponent implements OnInit {
   artist: Artist;
 
   constructor(private apiService: ApiService) { 
-
     // create empty objects to store data in
     this.artists = [];
-    this.artist = {
-      artistId: "00000000-0000-0000-0000-000000000000",
-      firstName:"",
-      lastName: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: "",
-      description: "",
-    };
+    this.artist = new Artist();
   }
 
   ngOnInit(): void {
@@ -44,18 +32,7 @@ export class AdminArtistEditComponent implements OnInit {
 
   clearForm() {
     this.getAllRecords(); 
-    this.artist = {
-      artistId: "00000000-0000-0000-0000-000000000000",
-      firstName:"",
-      lastName: "",
-      address: "",
-      city: "",
-      state: "",
-      postalCode: 0,
-      country: "",
-      phoneNumber: "",
-      description: "",
-    }
+    this.artist = new Artist();
   }
 
   onSubmit() {

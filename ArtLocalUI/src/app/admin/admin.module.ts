@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+
 import { AdminLoginComponent, 
          AdminDashboardComponent, 
          AdminArtistEditComponent,
@@ -13,6 +14,7 @@ import { AdminLoginComponent,
          AdminInvoiceEditComponent,
          AdminArtworkNewComponent, 
          AdminArtworkExistingComponent } from './pages';
+import { SharedModule } from 'src/app/shared';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { AdminLoginComponent,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   declarations: [
     AdminLoginComponent,

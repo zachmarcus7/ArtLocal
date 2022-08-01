@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Customer, ApiService, Admin } from 'src/app/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/core';
+
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -7,9 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  constructor() { }
+  buttonClicked: boolean;
+
+  constructor() {
+    this.buttonClicked = false;
+  }
 
   ngOnInit(): void {
+  }
+
+  receiveMessage(msg: boolean): void {
+    this.buttonClicked = !this.buttonClicked;
   }
 
 }

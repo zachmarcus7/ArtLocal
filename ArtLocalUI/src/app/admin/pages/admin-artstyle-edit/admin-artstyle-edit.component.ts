@@ -12,14 +12,9 @@ export class AdminArtstyleEditComponent implements OnInit {
   artstyle: Artstyle;
 
   constructor(private apiService: ApiService) { 
-
     // create empty objects to store data in
     this.artstyles = [];
-    this.artstyle = {
-      artStyleId: "00000000-0000-0000-0000-000000000000",
-      style:"",
-      description: "",
-    };
+    this.artstyle = new Artstyle();
   }
 
   ngOnInit(): void {
@@ -37,11 +32,7 @@ export class AdminArtstyleEditComponent implements OnInit {
 
   clearForm() {
     this.getAllRecords(); 
-    this.artstyle = {
-      artStyleId: "00000000-0000-0000-0000-000000000000",
-      style:"",
-      description: "",
-    };
+    this.artstyle = new Artstyle();
   }
 
   onSubmit() {

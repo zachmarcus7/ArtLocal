@@ -23,18 +23,7 @@ export class AdminArtworkNewComponent implements OnInit {
     this.artists = [];
     this.galleries = [];
     this.artstyles = [];
-    this.artwork = {
-      artworkId: "00000000-0000-0000-0000-000000000000",
-      artistId: "",
-      title: "",
-      description: "",
-      dateCreated: "",
-      price: 0,
-      imageLocation: "",
-      sold: false,
-      galleryId: "",
-      artStyleId: ""
-    }
+    this.artwork = new Artwork();
   }
 
   ngOnInit(): void {
@@ -91,18 +80,7 @@ export class AdminArtworkNewComponent implements OnInit {
 
   clearForm() {
     this.getAllRecords(); 
-    this.artwork = {
-      artworkId: "00000000-0000-0000-0000-000000000000",
-      artistId: "",
-      title: "",
-      description: "",
-      dateCreated: "",
-      price: 0,
-      imageLocation: "",
-      sold: false,
-      galleryId: "",
-      artStyleId: ""
-    }
+    this.artwork = new Artwork();
   }
 
   onFileSelected(event: any) {
