@@ -31,8 +31,11 @@ mat-sidenav-container {
 
 mat-sidenav {
   padding: 0;
-  width: 260px;
   background-color: var(--dark-blue);
+}
+
+.full-screen-transition {
+  transition: all 0.2s ease-out 0s;
 }
 
 ul {
@@ -142,6 +145,13 @@ mat-expansion-header {
   color: white;
 }
 
+.logo-title-sm {
+  background-color: var(--dark-blue);
+  padding-bottom: 10px;
+  padding-top: 15px;
+  color: white;
+}
+
 .logo-title:hover {
   background-color: var(--dark-blue);
 }
@@ -198,7 +208,7 @@ mat-expansion-panel {
 /* ------------------------------------------------------------------ */
 
 nav {
-  background-color: var(--light-grey-two);
+  background-color: white;
   width: 100%;
   position: fixed;
   padding-top: 0.7rem;
