@@ -3,22 +3,32 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HeaderComponent, 
          FooterComponent,
          UserHeaderComponent,
          UserLayoutComponent,
          AdminLayoutComponent,
-         BlankHeaderComponent} from './layout';
-import { BlankLayoutComponent } from './layout/blank-layout/blank-layout.component';
- 
+         BlankHeaderComponent,
+         MatToolbarHeaderComponent, 
+         BlankLayoutComponent } from './layout';
  
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     MatSidenavModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    FlexLayoutModule
   ],
   declarations: [ 
     HeaderComponent, 
@@ -27,7 +37,8 @@ import { BlankLayoutComponent } from './layout/blank-layout/blank-layout.compone
     UserLayoutComponent, 
     AdminLayoutComponent,
     BlankHeaderComponent,
-    BlankLayoutComponent
+    BlankLayoutComponent,
+    MatToolbarHeaderComponent
   ],
   exports: [
     HeaderComponent,

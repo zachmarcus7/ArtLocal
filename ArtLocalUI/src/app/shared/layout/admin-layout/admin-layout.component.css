@@ -2,7 +2,8 @@
 
    a. General Styles
    b. Material Expansion Panel 
-   c. 
+   c. Top Navbar Styles
+   d. Sidebar Styles
 
 ===================================================================== */
 
@@ -17,17 +18,15 @@
   --dark-blue-two: rgb(34, 45, 57);
   --mid-blue: rgb(84, 99, 120);
   --light-blue: rgb(73, 172, 221);
+  --mig-grey: rgb(139, 140, 141);
   --light-grey: rgb(170, 170, 170);
   --light-grey-one: rgb(244, 245, 249);
+  --light-grey-two: rgb(224, 226, 235);
 }
 
 mat-sidenav-container {
   height: 100%;
   background: var(--light-grey-one);
-}
-
-mat-sidenav, mat-sidenav-content {
-  padding: 16px;
 }
 
 mat-sidenav {
@@ -46,13 +45,6 @@ ul {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-.navigation {
-  height: 100%;
-  background: white;
-  transition: 0.5s;
-  overflow: hidden;
 }
 
 .navigation ul {
@@ -142,10 +134,24 @@ mat-expansion-header {
   padding-left: 60px !important;
 }
 
+.logo-title {
+  background-color: var(--dark-blue);
+  padding-left: 30px;
+  padding-bottom: 10px;
+  padding-top: 15px;
+  color: white;
+}
+
+.logo-title:hover {
+  background-color: var(--dark-blue);
+}
+
 .top-title {
   color: var(--light-grey);
   padding-left: 30px;
   padding-bottom: 10px;
+  padding-top: 10px;
+  color: white;
 }
 
 .top-title:hover {
@@ -187,3 +193,26 @@ mat-expansion-panel {
     background: var(--dark-blue);
 }
 
+/* ------------------------------------------------------------------ */
+/* c. Top Navbar Styles
+/* ------------------------------------------------------------------ */
+
+nav {
+  background-color: var(--light-grey-two);
+  width: 100%;
+  position: fixed;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+
+.navbar-menu {
+  right: 0;
+  padding-right: 40px;
+  position: fixed;
+}
+
+.navbar-icon {
+  font-size: 1.4em;
+  color: var(--mid-grey);
+  cursor: pointer;
+}

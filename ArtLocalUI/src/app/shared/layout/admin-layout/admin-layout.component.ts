@@ -12,11 +12,13 @@ export class AdminLayoutComponent implements OnInit {
   adminLoggedIn: boolean;
   displayLogo: boolean;
   sidenavOpened: boolean;
+  showTitles: boolean;
 
   constructor(private authService: AuthService, private router: Router) {
     this.adminLoggedIn = false;
     this.displayLogo = this.isLargeScreen() ? true : false;
     this.sidenavOpened = this.isLargeScreen() ? true : false;  
+    this.showTitles = this.isLargeScreen() ? true : false;  
   }
 
   ngOnInit() {

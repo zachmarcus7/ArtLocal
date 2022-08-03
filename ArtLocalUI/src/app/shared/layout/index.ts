@@ -6,3 +6,4 @@ export * from './user-header';
 export * from './user-layout';
 export * from './blank-header';
 export * from './blank-layout';
+export * from './mat-toolbar-header';
