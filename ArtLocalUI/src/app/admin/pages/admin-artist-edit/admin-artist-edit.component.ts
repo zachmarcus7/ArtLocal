@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Artist, ApiService } from 'src/app/core';
+import { AreaComponent } from 'src/app/shared/components';
 
 @Component({
   selector: 'app-admin-artist-edit',

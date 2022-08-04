@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AdminLoginComponent, 
          AdminDashboardComponent, 
@@ -24,7 +27,10 @@ import { SharedModule } from 'src/app/shared';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    MatDividerModule,
+    MatCardModule,
+    FlexLayoutModule 
   ],
   declarations: [
     AdminLoginComponent,
