@@ -226,3 +226,7 @@ nav {
   color: var(--mid-grey);
   cursor: pointer;
 }
+
+.navbar-title {
+  color: var(--mid-grey);
+}

@@ -7,7 +7,12 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { HighchartsChartModule } from 'highcharts-angular';
 
 import { HeaderComponent, 
          FooterComponent,
@@ -17,9 +22,14 @@ import { HeaderComponent,
          BlankHeaderComponent,
          MatToolbarHeaderComponent, 
          BlankLayoutComponent } from './layout';
+import { AreaComponent } from './components/area/area.component';
+import { GeneralContainerComponent } from './components/general-container/general-container.component';
+import { GeneralTableComponent } from './components/general-table/general-table.component';
  
 @NgModule({
   imports: [
+    HighchartsChartModule,
+    FlexLayoutModule,
     CommonModule,
     RouterModule,
     MatSidenavModule,
@@ -28,7 +38,9 @@ import { HeaderComponent,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    FlexLayoutModule
+    MatMenuModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   declarations: [ 
     HeaderComponent, 
@@ -38,7 +50,10 @@ import { HeaderComponent,
     AdminLayoutComponent,
     BlankHeaderComponent,
     BlankLayoutComponent,
-    MatToolbarHeaderComponent
+    MatToolbarHeaderComponent,
+    AreaComponent,
+    GeneralContainerComponent,
+    GeneralTableComponent
   ],
   exports: [
     HeaderComponent,
@@ -46,7 +61,10 @@ import { HeaderComponent,
     AdminLayoutComponent,
     UserHeaderComponent,
     UserLayoutComponent,
-    BlankHeaderComponent
+    BlankHeaderComponent,
+    AreaComponent,
+    GeneralContainerComponent,
+    GeneralTableComponent
   ]
 })
 export class SharedModule {

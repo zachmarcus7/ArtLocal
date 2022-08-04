@@ -93,13 +93,25 @@
         <ng-template #adminLoggedInBlock>
           <div class="navbar-menu row">
             <div class="col-4">
-              <i class="fa-solid fa-gear navbar-icon"></i>
+              <i class="fa-solid fa-gear navbar-icon" [matMenuTriggerFor]="menu"></i>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>Item 1</button>
+                <button mat-menu-item>Item 2</button>
+              </mat-menu>
             </div>
             <div class="col-4">
               <i class="fa-solid fa-ellipsis-vertical navbar-icon"></i>            
             </div>
             <div class="col-4">
-              Menu
+              <h4 [matMenuTriggerFor]="logoutMenu" class="navbar-title">
+                Menu
+              </h4>
+              <mat-menu #logoutMenu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>exit_to_app</mat-icon>
+                  Sign Out
+                </button>
+              </mat-menu>
             </div>
           </div>
         </ng-template>
