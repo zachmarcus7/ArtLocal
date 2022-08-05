@@ -16,7 +16,14 @@ import { AdminLoginComponent,
          AdminInvoiceEditComponent,
          AdminArtworkExistingComponent,
          AdminArtworkNewComponent } from './admin';
-import { AdminAuthGuard } from './auth';
+
+
+//import { AdminAuthGuard } from './auth';
+
+// Import the authentication guard
+import { AuthGuard } from '@auth0/auth0-angular';
+
+
 import { AdminLayoutComponent,
          UserLayoutComponent,
          BlankLayoutComponent} from './shared'; 
@@ -44,7 +51,7 @@ const routes: Routes = [
     children: [
       { path: 'admin', component: AdminLoginComponent }, 
       { path: 'admin/dashboard', component: AdminLayoutComponent,
-        canActivate: [AdminAuthGuard],
+        canActivate: [AuthGuard],
         children: [
           { path: 'artists', component: AdminArtistEditComponent}, 
           { path: 'artwork', component: AdminArtworkEditComponent,

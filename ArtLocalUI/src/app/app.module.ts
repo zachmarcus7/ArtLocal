@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+// Import the module from the SDK
+import { AuthModule } from '@auth0/auth0-angular';   
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,12 +14,8 @@ import { CoreModule } from './core/core.module';
 import { TokenInterceptor } from './core';
 import { HomeModule } from './home';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-/*
-import { CheckoutComponent } from './home';
-import { AdminLoginComponent } from './admin/pages/admin-login/admin-login.component';
-import { AdminDashboardComponent } from './admin/pages/admin-dashboard/admin-dashboard.component';
-import { AdminArtistEditComponent } from './admin';*/
+import { environment as env } from '../environments/environment'; // <----
+import { default as auth } from '../../auth_config.json';
 
 @NgModule({
   declarations: [
@@ -25,6 +23,9 @@ import { AdminArtistEditComponent } from './admin';*/
   ],
   imports: [
     BrowserModule,
+    AuthModule.forRoot({  // <------
+      ...env.auth   // this is called spreading the object
+    }),
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
