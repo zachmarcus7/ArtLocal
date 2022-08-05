@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -25,6 +26,8 @@ import { HeaderComponent,
 import { AreaComponent } from './components/area/area.component';
 import { GeneralContainerComponent } from './components/general-container/general-container.component';
 import { GeneralTableComponent } from './components/general-table/general-table.component';
+import { LoginButonComponent } from './components/login-buton/login-buton.component';
+import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
  
 @NgModule({
   imports: [
@@ -40,7 +43,8 @@ import { GeneralTableComponent } from './components/general-table/general-table.
     MatButtonModule,
     MatMenuModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule
   ],
   declarations: [ 
     HeaderComponent, 
@@ -53,7 +57,9 @@ import { GeneralTableComponent } from './components/general-table/general-table.
     MatToolbarHeaderComponent,
     AreaComponent,
     GeneralContainerComponent,
-    GeneralTableComponent
+    GeneralTableComponent,
+    LoginButonComponent,
+    LogoutButtonComponent
   ],
   exports: [
     HeaderComponent,
@@ -64,7 +70,9 @@ import { GeneralTableComponent } from './components/general-table/general-table.
     BlankHeaderComponent,
     AreaComponent,
     GeneralContainerComponent,
-    GeneralTableComponent
+    GeneralTableComponent,
+    LoginButonComponent,
+    LogoutButtonComponent
   ]
 })
 export class SharedModule {

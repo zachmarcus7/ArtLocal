@@ -1,0 +1,10 @@
+
+<button class="btn btn-primary btn-block" (click)="loginWithRedirect()">
+  Log in
+</button>
+
+
+<div *ngIf="(auth.isAuthenticated$ | async)">logged in </div>
+
+
+

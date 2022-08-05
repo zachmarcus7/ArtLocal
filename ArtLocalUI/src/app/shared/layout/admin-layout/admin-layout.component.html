@@ -89,8 +89,10 @@
           <i class="fa-solid fa-bars navbar-icon"></i>
         </div>
 
-        <div *ngIf="adminLoggedIn; then adminLoggedInBlock else adminLoggedOutBlock"></div>
-        <ng-template #adminLoggedInBlock>
+        <div *ngIf="auth.isLoading$ | async; else loaded">
+          <mat-spinner></mat-spinner>
+        </div>
+        <ng-template #loaded>
           <div class="navbar-menu row">
             <div class="col-4">
               <i class="fa-solid fa-gear navbar-icon" [matMenuTriggerFor]="menu"></i>
@@ -103,19 +105,16 @@
               <i class="fa-solid fa-ellipsis-vertical navbar-icon"></i>            
             </div>
             <div class="col-4">
-              <h4 [matMenuTriggerFor]="logoutMenu" class="navbar-title">
+              <h4 [matMenuTriggerFor]="logoutMenu" class="navbar-title hoverable">
                 Menu
               </h4>
               <mat-menu #logoutMenu="matMenu">
-                <button mat-menu-item>
-                  <mat-icon>exit_to_app</mat-icon>
-                  Sign Out
-                </button>
+
+                <app-logout-button *ngIf="(auth.isAuthenticated$ | async)"></app-logout-button>
+
               </mat-menu>
             </div>
           </div>
-        </ng-template>
-        <ng-template #adminLoggedOutBlock>
         </ng-template>
       </div>
     </nav>

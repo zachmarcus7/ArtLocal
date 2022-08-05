@@ -1,7 +1,14 @@
-import { Component, OnInit, HostListener, Output, EventEmitter, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/core';
+import { Component, 
+         OnInit, 
+         HostListener, 
+         Output, 
+         EventEmitter, 
+         ViewChild} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Observable } from 'rxjs';
+
+import { AuthService } from '@auth0/auth0-angular'; 
 
 @Component({
   selector: 'app-admin-layout',
@@ -10,7 +17,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  adminLoggedIn: boolean;
+  adminLoggedIn: Observable<boolean>;
   displayLogo: boolean;
   sidenavOpened: boolean;
   showTitles: boolean;
@@ -20,19 +27,19 @@ export class AdminLayoutComponent implements OnInit {
   contentMargin: number;
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(public auth: AuthService, private router: Router) {
     this.minWidth = "65px";
     this.regWidth = "260px";
     this.contentMargin = 260;
-    this.adminLoggedIn = false;
     this.displayLogo = this.isLargeScreen() ? true : false;
     this.sidenavOpened = this.isLargeScreen() ? true : false;  
     this.showTitles = this.isLargeScreen() ? true : false;  
     this.sidenavWidth = this.isLargeScreen() ? this.regWidth : this.minWidth;
+
+    this.adminLoggedIn = this.auth.isAuthenticated$;
   }
 
   ngOnInit() {
-    this.getAdminLoggedInValue();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -77,19 +84,6 @@ export class AdminLayoutComponent implements OnInit {
       this.sidenavWidth = this.regWidth;
       this.contentMargin = this.contentMargin == 260 ? 65 : 260;
     }
-  }
-
-  getAdminLoggedInValue() {
-    this.authService.adminLoggerObs()
-    .subscribe(
-      response => (
-        this.adminLoggedIn = response
-      )
-    )
-  }
-
-  logOut() {
-    this.authService.adminLogOut();
   }
 
 }
