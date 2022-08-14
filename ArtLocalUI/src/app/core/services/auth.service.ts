@@ -1,123 +1,63 @@
 import { Injectable } from '@angular/core';
 import { Admin, Customer } from '../models';
 import { Observable } from 'rxjs/internal/Observable';
-import { Subject } from 'rxjs';
+import { Subject, map, tap, BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
+import { ApiService } from './api.service';
+import { JwtService } from './jwt.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
     
-    private adminLogger = new Subject<boolean>();
-    private adminLoggedIn: boolean;
-    private customerLogger = new Subject<boolean>();
-    private customerLoggedIn: boolean;
-    private usernameLogger = new Subject<string>();
-    private username: string;
-    private userIdLogger = new Subject<string>();
-    private userId: string;
+    private _isLoggedIn = new BehaviorSubject<boolean>(false); 
+    public isLoggedIn = this._isLoggedIn.asObservable();
 
-    constructor() {
-        this.adminLoggedIn = false;
-        this.customerLoggedIn = false;
-        this.username = "";
-        this.userId = "";
-    }
-  
-    adminLoggerObs(): Observable<boolean> {
-        return this.adminLogger.asObservable();
-    }
+    private _currentCustomerName = new BehaviorSubject<string>(""); // starting here
+    public currentCustomerName = this._currentCustomerName.asObservable(); // observables listen here
 
-    adminLoggedInNow(): boolean {
-        return this.adminLoggedIn;
+    constructor(
+        private apiService: ApiService, 
+        private router: Router,
+        private jwtService: JwtService
+        
+    ) {
+        // these are important for page reloads
+        const token = localStorage.getItem('jwt');
+        this._isLoggedIn.next(!!token); 
+
+        const name = localStorage.getItem('exp');
+        this._currentCustomerName.next(name || "not logged in");
     }
 
-    customerLoggerObs(): Observable<boolean> {
-        return this.customerLogger.asObservable();
+    login(username: string, password: string): Observable<any> {
+        // create a new customer for authentication
+        let customer = new Customer(true);
+        customer.userName = username;
+        customer.password = password;
+
+        return this.apiService.authenticateCustomer(customer).pipe(
+            tap((response: any) => {
+                this._isLoggedIn.next(true); // every subscriber will be notified with 'next'
+                localStorage.setItem('jwt', response);
+
+                // decode the jwt
+                let decoded = this.jwtService.decodeToken(response);
+                
+                // set the customer name (used exp here)
+                this._currentCustomerName.next(decoded['exp']);
+                localStorage.setItem('exp', decoded['exp']);
+
+            })
+        );
     }
 
-    customerLoggedInNow(): boolean {
-        return this.customerLoggedIn;
-    }
-  
-    adminLogIn(token: any) {
-        // store the jwt
-        localStorage.setItem("jwt", token);
-
-        // if a customer is logged in, log them out
-        if (this.customerLoggedIn) 
-            this.customerLogOut();
-
-        // update the local storage values
-        localStorage.setItem("admin-logged-in", "true");
-
-        // push the values so that observers can be updated
-        this.adminLoggedIn = true;
-        this.adminLogger.next(this.adminLoggedIn);
-    }
-  
-    adminLogOut() {
-        // remove the jwt
-        localStorage.removeItem("jwt");
-
-        // update the local storage values
-        localStorage.removeItem("admin-logged-in");
-
-        // push the values so that observers can be updated
-        this.adminLoggedIn = false;
-        this.adminLogger.next(this.adminLoggedIn);
-    }
-
-    customerLogIn(token: any, customer: Customer) {
-        // store the jwt
-        localStorage.setItem("jwt", token);
-
-        // if an admin is logged in, log them out
-        if (this.adminLoggedIn) 
-            this.adminLogOut();
-
-        // update the local storage values
-        localStorage.setItem("customer-logged-in", "true");
-        localStorage.setItem("customer-username", customer.userName);
-        localStorage.setItem("customer-id", customer.customerId);
-
-        // push the values so that observers can be updated
-        this.customerLoggedIn = true;
-        this.customerLogger.next(this.customerLoggedIn);
-        this.username = customer.userName;
-        this.usernameLogger.next(this.username);
-    }
-  
-    customerLogOut() {
-        // remove the jwt
-        localStorage.removeItem("jwt");
-
-        // update the local storage values
-        localStorage.removeItem("customer-logged-in");
-        localStorage.removeItem("customer-username");
-        localStorage.removeItem("customer-id");
-
-        // push the values so that observers can be updated
-        this.customerLoggedIn = false;
-        this.customerLogger.next(this.customerLoggedIn);
-        this.username = "";
-        this.usernameLogger.next(this.username);
-    }
-
-    getCurrentName(): Observable<string> {
-        return this.usernameLogger.asObservable();
-    }
-
-    getCurrentId(): string {
-        // check if there is currently an id in local storage
-        let res: string | null = localStorage.getItem("customer-id");
-        if (res != null) {
-            return res;
-        }
-
-        // otherwise, return an empty guid
-        return "00000000-0000-0000-0000-000000000000";
+    logout() {
+        localStorage.removeItem('jwt');
+        window.location.reload();
     }
 
 }
+

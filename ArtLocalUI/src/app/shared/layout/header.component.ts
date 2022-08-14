@@ -39,11 +39,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCustomerLoggedInValue();
-    this.getAdminLoggedInValue();
-    this.getNameValue();
+    //this.getCustomerLoggedInValue();
+    //this.getAdminLoggedInValue();
+    //this.getNameValue();
   }
 
+  /*
   getCustomerLoggedInValue() {
     this.authService.customerLoggerObs()
     .subscribe(
@@ -79,5 +80,8 @@ export class HeaderComponent implements OnInit {
       this.authService.adminLogOut();
     }
   }
+  */
+
+  logOut() {}
 }
 

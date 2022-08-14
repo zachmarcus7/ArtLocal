@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Admin, Artwork, Artist, Customer, Invoice, Artstyle, Gallery } from '../models';
 import { Observable } from 'rxjs/internal/Observable';
+import { environment as env } from 'src/environments/environment';
+
 
 @Injectable({
     providedIn: 'root'
@@ -66,6 +68,11 @@ export class ApiService {
         return this.http.get<Customer[]>(this.customerUrl);
     }
 
+    // Get a specific Customer
+    getCustomer(id: string): Observable<Customer> {
+        return this.http.get<Customer>(this.customerUrl + "/" + id);
+    }
+
     // Create a new Customer
     createCustomer(customer: Customer): Observable<Customer> {
         return this.http.post<Customer>(this.customerUrl, customer);
@@ -84,7 +91,7 @@ export class ApiService {
     // Create a new Artstyle
     createArtstyle(artstyle: Artstyle): Observable<Artstyle> {
         return this.http.post<Artstyle>(this.artstyleUrl, artstyle);
-    }
+    } 
 
     // Update an Artstyle
     updateArtstyle(artStyleId: string, updatedArtstyle: Artstyle): Observable<Artstyle> {
