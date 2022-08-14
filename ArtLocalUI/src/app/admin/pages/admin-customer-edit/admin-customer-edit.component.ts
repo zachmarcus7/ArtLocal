@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '@auth0/auth0-angular';
 import { Customer, ApiService } from 'src/app/core';
+import { map } from 'rxjs/operators'
 
 @Component({
   selector: 'app-admin-customer-edit',

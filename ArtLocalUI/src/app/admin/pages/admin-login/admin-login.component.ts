@@ -24,25 +24,6 @@ export class AdminLoginComponent {
     this.invalidLogin = false;
   }
 
-  login(): void {
-    this.apiService.authenticateAdmin(this.admin)
-    .subscribe(
-      response => {
-        // if the response isn't null, that means the admin
-        // credentials were authenticated and a jwt was sent back
-        if (response) {
-          const token = response;
-          this.authService.adminLogIn(token);
-          this.router.navigate(['admin/dashboard']);
-          this.invalidLogin = false;
-        } 
-        else {
-          this.invalidLogin = true;
-        }
-      },
-      err => {
-        this.invalidLogin = true;
-      }
-    )
-  }
+  login() {}
+
 }

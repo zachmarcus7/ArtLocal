@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Artist, ApiService } from 'src/app/core';
 import { AreaComponent } from 'src/app/shared/components';
 
@@ -11,6 +12,19 @@ export class AdminArtistEditComponent implements OnInit {
 
   artists: Artist[];
   artist: Artist;
+
+  /*
+  artistTest = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    address: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    postalCode: new FormControl(''),
+    country: new FormControl(''),
+    phoneNumber: new FormControl(''),
+    description: new FormControl(''),
+  })*/
 
   constructor(private apiService: ApiService) { 
     // create empty objects to store data in

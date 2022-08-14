@@ -43,7 +43,8 @@ export class AdminArtstyleEditComponent implements OnInit {
         response => {
           // once we get a response, clear out the forms
           this.clearForm();
-        }
+        },
+      error => console.error(error)
       )
     }
     // otherwise, this means that we're receiving an update request
