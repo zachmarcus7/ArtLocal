@@ -45,7 +45,7 @@ export class CheckoutComponent implements OnInit {
   // this is for keeping track if a customer is currently logged in and
   // can place an order
   getLoggedInValue() {
-    this.loggedIn = this.authService.customerLoggedInNow();
+    
   }
 
   getArtworkId() {
@@ -85,6 +85,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(): void {
+    /*
     // check if the customer is logged in
     if (this.loggedIn == true) {
       // first, update the invoice and the artwork
@@ -103,6 +104,7 @@ export class CheckoutComponent implements OnInit {
       // if there's no customer logged in, redirect them to the login page
       this.router.navigate(['/login']);
     }
+    */
   }
 
 }

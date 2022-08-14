@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Artwork, ApiService, Artist } from 'src/app/core';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-details',
@@ -27,6 +27,7 @@ export class DetailsComponent  {
 
   ngOnInit() {
     this.getQueryParams();
+    console.log(window.history.state);
   }
 
   // here, we're getting the artwork's id from the query parameters
@@ -55,6 +56,3 @@ export class DetailsComponent  {
   }
 
 }
-
-
-

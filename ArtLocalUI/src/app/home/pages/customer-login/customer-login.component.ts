@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Customer, ApiService, AuthService } from 'src/app/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-customer-login',
@@ -28,8 +29,20 @@ export class CustomerLoginComponent  {
     this.invalidLogin = false;
   }
 
+
+  submitForm() {
+    // need to do validation
+
+    this.authService
+      .login(this.customer.userName, this.customer.password)
+      .subscribe((response) => {
+        this.router.navigate(['/']);
+      });
+  }
+
+
+ /*
   login(): void {
-    console.log(this.customer);
 
     this.apiService.authenticateCustomer(this.customer)
     .subscribe(
@@ -38,7 +51,7 @@ export class CustomerLoginComponent  {
         // credentials were authenticated and a jwt was sent back
         if (response) {
           const token = response;
-          this.authService.customerLogIn(token, this.customer);
+          this.authService.customerLogIn(token);
           this.router.navigate(['/']);
           this.invalidLogin = false;
         } 
@@ -51,5 +64,6 @@ export class CustomerLoginComponent  {
       }
     )
   }
-  
+  */
+ 
 }

@@ -35,6 +35,11 @@ export class CustomerRegisterComponent {
   }
 
   login(): void {
+    
+  }
+
+  /*
+  login(): void {
     this.apiService.authenticateCustomer(this.customer)
     .subscribe(
       response => {
@@ -42,11 +47,11 @@ export class CustomerRegisterComponent {
         // credentials were authenticated and a jwt was sent back
         if (response) {
           const token = response;
-          this.authService.customerLogIn(token, this.customer);
+          this.authService.customerLogIn(token);
           this.router.navigate(['/']);
         }
       }
     )
-  }
+  }*/
 
 }
