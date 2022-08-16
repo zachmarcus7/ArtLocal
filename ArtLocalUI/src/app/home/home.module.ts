@@ -8,6 +8,9 @@ import { HomeComponent,
          CheckoutComponent,
          CustomerRegisterComponent,
          CustomerLoginComponent } from './pages';
+import { FormExampleComponent } from './pages/form-example/form-example.component';
+import { FormOneComponent } from './pages/form-one/form-one.component';
+import { FormTwoComponent } from './pages/form-two/form-two.component';
 
 
 @NgModule({
@@ -23,7 +26,8 @@ import { HomeComponent,
     DetailsComponent, 
     CheckoutComponent,
     CustomerRegisterComponent, 
-    CustomerLoginComponent
+    CustomerLoginComponent, 
+    FormExampleComponent, FormOneComponent, FormTwoComponent
   ],
   exports: [
     CommonModule,
@@ -31,7 +35,8 @@ import { HomeComponent,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    HomeComponent
+    HomeComponent,
+    FormExampleComponent
   ]
 })
 export class HomeModule {
