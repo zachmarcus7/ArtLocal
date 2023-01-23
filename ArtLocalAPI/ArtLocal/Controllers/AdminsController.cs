@@ -26,7 +26,6 @@ namespace ArtLocal.Controllers
             _dbContext = context;
         }
 
-        // GET: api/Admins
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmin()
