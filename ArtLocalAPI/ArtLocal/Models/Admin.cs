@@ -12,6 +12,5 @@ namespace ArtLocal.Models
 
         [Required]
         public string? Password { get; set; }
-
     }
 }
