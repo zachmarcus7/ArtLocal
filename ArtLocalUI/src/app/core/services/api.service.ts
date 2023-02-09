@@ -35,7 +35,6 @@ export class ApiService {
 
     // Create a new Artwork
     createArtwork(artwork: Artwork): Observable<Artwork> {
-        console.log(artwork);
         return this.http.post<Artwork>(this.artworkUrl, artwork);
     }
 
